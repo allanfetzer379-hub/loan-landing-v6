@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>客戶名單後台 | 群誠資產</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif;
+      background: #f5f6f7;
+      color: #172026;
+    }
+    header {
+      background: #0a7f20;
+      color: #fff;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    header h1 { margin: 0; font-size: 20px; }
+    main { max-width: 1180px; margin: 0 auto; padding: 18px; }
+    .panel {
+      background: #fff;
+      border: 1px solid #e3e7ea;
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.04);
+      margin-bottom: 14px;
+    }
+    .login-box { max-width: 420px; margin: 48px auto; }
+    label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid #cfd7de;
+      border-radius: 6px;
+      padding: 9px 10px;
+      font: inherit;
+      background: #fff;
+    }
+    textarea { min-height: 72px; resize: vertical; }
+    button {
+      border: 0;
+      border-radius: 6px;
+      background: #0a7f20;
+      color: #fff;
+      padding: 9px 13px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    button.secondary { background: #eef2f4; color: #172026; }
+    button.danger { background: #b42318; }
+    button:disabled { opacity: .55; cursor: not-allowed; }
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr 180px 140px 120px;
+      gap: 10px;
+      align-items: end;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .stat {
+      background: #f7faf8;
+      border: 1px solid #dbeee0;
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .stat b { display: block; font-size: 24px; color: #0a7f20; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 1080px; }
+    th, td {
+      padding: 10px 8px;
+      border-bottom: 1px solid #e6ebef;
+      text-align: left;
+      vertical-align: top;
+      font-size: 13px;
+    }
+    th { background: #f8fafb; font-size: 12px; color: #5d6b76; }
+    .muted { color: #6b7882; font-size: 12px; }
+    .pill {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #edf7ef;
+      color: #0a7f20;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .row-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+    .hidden { display: none !important; }
+    .notice { color: #6b7882; font-size: 13px; line-height: 1.6; }
+    .error { color: #b42318; }
+    @media (max-width: 760px) {
+      main { padding: 10px; }
+      .toolbar, .stats { grid-template-columns: 1fr; }
+      header h1 { font-size: 17px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>群誠資產｜客戶名單後台</h1>
+    <div id="user-bar" class="hidden">
+      <span id="user-email"></span>
+      <button class="secondary" onclick="signOut()">登出</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="login-panel" class="panel login-box">
+      <h2>管理員登入</h2>
+      <p class="notice">請使用管理員信箱登入。系統會寄送一次性登入連結。</p>
+      <label for="admin-email">管理員信箱</label>
+      <input id="admin-email" type="email" value="allanfetzer379@gmail.com" autocomplete="email" />
+      <div style="height:12px"></div>
+      <button id="login-btn" onclick="sendLoginLink()">寄送登入連結</button>
+      <p id="login-msg" class="notice"></p>
+    </section>
+
+    <section id="app-panel" class="hidden">
+      <div class="stats">
+        <div class="stat"><span>全部名單</span><b id="stat-total">0</b></div>
+        <div class="stat"><span>新客戶</span><b id="stat-new">0</b></div>
+        <div class="stat"><span>已聯繫</span><b id="stat-contacted">0</b></div>
+        <div class="stat"><span>已成交</span><b id="stat-approved">0</b></div>
+      </div>
+
+      <div class="panel">
+        <div class="toolbar">
+          <div>
+            <label for="search">搜尋</label>
+            <input id="search" placeholder="姓名、電話、LINE、縣市、身分證" oninput="renderLeads()" />
+          </div>
+          <div>
+            <label for="status-filter">狀態</label>
+            <select id="status-filter" onchange="renderLeads()">
+              <option value="">全部</option>
+              <option value="new">新客戶</option>
+              <option value="contacted">已聯繫</option>
+              <option value="line_added">已加 LINE</option>
+              <option value="approved">已成交</option>
+              <option value="rejected">未成交</option>
+              <option value="invalid">無效</option>
+            </select>
+          </div>
+          <button onclick="loadLeads()">重新整理</button>
+          <button class="secondary" onclick="exportCSV()">匯出 CSV</button>
+        </div>
+      </div>
+
+      <div class="panel table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>提交時間</th>
+              <th>客戶</th>
+              <th>聯絡</th>
+              <th>表單選項</th>
+              <th>狀態</th>
+              <th>備註</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="lead-rows"></tbody>
+        </table>
+        <p id="empty-msg" class="notice hidden">目前沒有符合條件的名單。</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const SUPABASE_URL = 'https://syddbzqkhotpyyoqykof.supabase.co';
+    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_STtS281jKjrPZ_zfOiWvdA_pdB7kg1Q';
+    const client = supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+    const statusLabels = {
+      new: '新客戶',
+      contacted: '已聯繫',
+      line_added: '已加 LINE',
+      approved: '已成交',
+      rejected: '未成交',
+      invalid: '無效'
+    };
+    let leads = [];
+
+    function escapeHTML(value) {
+      return String(value || '').replace(/[&<>"']/g, ch => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+      }[ch]));
+    }
+
+    function formatDate(value) {
+      return value ? new Date(value).toLocaleString('zh-TW', { hour12: false }) : '';
+    }
+
+    async function sendLoginLink() {
+      const email = document.getElementById('admin-email').value.trim();
+      const msg = document.getElementById('login-msg');
+      const btn = document.getElementById('login-btn');
+      msg.textContent = '';
+      btn.disabled = true;
+      const { error } = await client.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: window.location.href.split('#')[0] }
+      });
+      btn.disabled = false;
+      msg.textContent = error ? '登入信寄送失敗：' + error.message : '登入連結已寄出，請到信箱點擊連結。';
+      msg.className = error ? 'notice error' : 'notice';
+    }
+
+    async function signOut() {
+      await client.auth.signOut();
+      location.reload();
+    }
+
+    async function checkSession() {
+      await client.auth.getSession();
+      const { data } = await client.auth.getUser();
+      if (!data.user) return;
+      document.getElementById('login-panel').classList.add('hidden');
+      document.getElementById('app-panel').classList.remove('hidden');
+      document.getElementById('user-bar').classList.remove('hidden');
+      document.getElementById('user-email').textContent = data.user.email || '';
+      await loadLeads();
+    }
+
+    async function loadLeads() {
+      const { data, error } = await client
+        .from('leads')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (error) {
+        alert('讀取名單失敗：' + error.message);
+        return;
+      }
+      leads = data || [];
+      renderStats();
+      renderLeads();
+    }
+
+    function renderStats() {
+      document.getElementById('stat-total').textContent = leads.length;
+      document.getElementById('stat-new').textContent = leads.filter(x => x.status === 'new').length;
+      document.getElementById('stat-contacted').textContent = leads.filter(x => x.status === 'contacted').length;
+      document.getElementById('stat-approved').textContent = leads.filter(x => x.status === 'approved').length;
+    }
+
+    function filteredLeads() {
+      const q = document.getElementById('search').value.trim().toLowerCase();
+      const status = document.getElementById('status-filter').value;
+      return leads.filter(lead => {
+        if (status && lead.status !== status) return false;
+        if (!q) return true;
+        return [lead.name, lead.phone, lead.line_id, lead.city, lead.id_number]
+          .some(value => String(value || '').toLowerCase().includes(q));
+      });
+    }
+
+    function renderLeads() {
+      const rows = document.getElementById('lead-rows');
+      const data = filteredLeads();
+      document.getElementById('empty-msg').classList.toggle('hidden', data.length > 0);
+      rows.innerHTML = data.map(lead => `
+        <tr>
+          <td>
+            ${escapeHTML(formatDate(lead.created_at))}
+            <div class="muted">${escapeHTML(lead.source_url || '')}</div>
+          </td>
+          <td>
+            <strong>${escapeHTML(lead.name)}</strong>
+            <div class="muted">${escapeHTML(lead.age)} 歲｜${escapeHTML(lead.city)}</div>
+            <div class="muted">ID：${escapeHTML(lead.id_number)}</div>
+          </td>
+          <td>
+            <div>電話：<a href="tel:${escapeHTML(lead.phone)}">${escapeHTML(lead.phone)}</a></div>
+            <div>LINE：${escapeHTML(lead.line_id)}</div>
+            <div class="muted">${lead.line_clicked ? '已點 LINE' : '尚未點 LINE'}</div>
+          </td>
+          <td>
+            <div>既有貸款：${escapeHTML(lead.q1_existing_loan)}</div>
+            <div>帳戶狀態：${escapeHTML(lead.q2_bank_status)}</div>
+            <div>需求金額：${escapeHTML(lead.q3_amount_needed)}</div>
+            <div>外幣帳戶：${escapeHTML(lead.q4_foreign_currency_account)}</div>
+          </td>
+          <td>
+            <span class="pill">${escapeHTML(statusLabels[lead.status] || lead.status)}</span>
+            <div style="height:6px"></div>
+            <select onchange="updateLead('${lead.id}', { status: this.value })">
+              ${Object.entries(statusLabels).map(([value, label]) =>
+                `<option value="${value}" ${lead.status === value ? 'selected' : ''}>${label}</option>`
+              ).join('')}
+            </select>
+          </td>
+          <td>
+            <textarea id="notes-${lead.id}">${escapeHTML(lead.notes || '')}</textarea>
+          </td>
+          <td>
+            <div class="row-actions">
+              <button onclick="saveNotes('${lead.id}')">存備註</button>
+              <button class="secondary" onclick="copyText('${escapeHTML(lead.phone)}')">複製電話</button>
+              <button class="secondary" onclick="copyText('${escapeHTML(lead.line_id)}')">複製 LINE</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function updateLead(id, patch) {
+      const { error } = await client.from('leads').update(patch).eq('id', id);
+      if (error) {
+        alert('更新失敗：' + error.message);
+        return;
+      }
+      await loadLeads();
+    }
+
+    function saveNotes(id) {
+      const notes = document.getElementById('notes-' + id).value;
+      updateLead(id, { notes });
+    }
+
+    async function copyText(value) {
+      await navigator.clipboard.writeText(value || '');
+    }
+
+    function exportCSV() {
+      const cols = ['created_at','name','age','city','id_number','phone','line_id','q1_existing_loan','q2_bank_status','q3_amount_needed','q4_foreign_currency_account','status','notes','source_url'];
+      const csv = [cols.join(',')].concat(filteredLeads().map(row =>
+        cols.map(col => '"' + String(row[col] || '').replace(/"/g, '""') + '"').join(',')
+      )).join('\n');
+      const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'leads-' + new Date().toISOString().slice(0,10) + '.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    checkSession();
+  </script>
+</body>
+</html>
