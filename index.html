@@ -1597,7 +1597,18 @@ function nextStep(from) {
 }
 
 // ============================================================
-// SUBMIT FORM → Google Forms + FB Pixel
+function createLeadId() {
+  if (window.crypto && window.crypto.randomUUID) {
+    return window.crypto.randomUUID();
+  }
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0;
+    var v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+// SUBMIT FORM -> Supabase + FB Pixel
 // ============================================================
 async function submitForm(e) {
   e.preventDefault();
@@ -1625,7 +1636,9 @@ async function submitForm(e) {
     submitBtn.textContent = '資料送出中，請稍候...';
   }
 
+  var leadId = createLeadId();
   var leadPayload = {
+    id: leadId,
     name: name,
     age: parseInt(age, 10),
     city: city,
@@ -1655,6 +1668,7 @@ async function submitForm(e) {
     if (!response.ok) {
       throw new Error('Supabase insert failed: ' + response.status);
     }
+    window.__lastLeadId = leadId;
   } catch(err) {
     console.warn('Supabase submit error:', err);
     showModal('⚠️ 提示', '資料送出失敗，請稍後再試，或直接加入 LINE 聯繫專員。');
