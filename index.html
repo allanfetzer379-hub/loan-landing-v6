@@ -1491,22 +1491,10 @@ var ENTERPRISE_LINE_ID = '@YOUR_LINE_ID';
 var ENTERPRISE_LINE_URL = 'https://line.me/R/ti/p/' + ENTERPRISE_LINE_ID;
 
 // ============================================================
-// CONFIG — Google 表單
+// CONFIG — Supabase Leads Backend
 // ============================================================
-var GF_ACTION = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLScKAOh6S_u8GVa0iDXlQcpIqzXgSafFmZdwQSF5Vqw-eG5SKw/formResponse';
-var GF_ENTRIES = {
-  name:   'entry.680318995',
-  age:    'entry.1570362856',
-  city:   'entry.460406272',
-  idnum:  'entry.1523326095',
-  phone:  'entry.1553052779',
-  lineid: 'entry.1655974417',
-  q1:     'entry.2015863572',
-  q2:     'entry.1370483615',
-  q3:     'entry.1395523168',
-  q4:     'entry.1057171533',
-  // entry.1804840388 備用欄位（如需擴充）
-};
+var SUPABASE_URL = 'https://syddbzqkhotpyyoqykof.supabase.co';
+var SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_STtS281jKjrPZ_zfOiWvdA_pdB7kg1Q';
 
 // ============================================================
 // DYNAMIC DATE
@@ -1611,7 +1599,7 @@ function nextStep(from) {
 // ============================================================
 // SUBMIT FORM → Google Forms + FB Pixel
 // ============================================================
-function submitForm(e) {
+async function submitForm(e) {
   e.preventDefault();
 
   var name   = document.getElementById('f-name').value.trim();
@@ -1630,48 +1618,51 @@ function submitForm(e) {
     return;
   }
 
-  // --- 送出到 Google 表單（no-cors iframe 方式）---
+  var submitBtn = document.querySelector('#apply-form button[type="submit"]');
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.dataset.originalText = submitBtn.textContent;
+    submitBtn.textContent = '資料送出中，請稍候...';
+  }
+
+  var leadPayload = {
+    name: name,
+    age: parseInt(age, 10),
+    city: city,
+    id_number: idNum,
+    phone: phone,
+    line_id: lineId,
+    q1_existing_loan: answers['q1'] || '',
+    q2_bank_status: answers['q2'] || '',
+    q3_amount_needed: answers['q3'] || '',
+    q4_foreign_currency_account: answers['q4'] || '',
+    source_url: window.location.href,
+    user_agent: navigator.userAgent
+  };
+
   try {
-    var params = new URLSearchParams();
-    params.append(GF_ENTRIES.name,   name);
-    params.append(GF_ENTRIES.age,    age);
-    params.append(GF_ENTRIES.city,   city);
-    params.append(GF_ENTRIES.idnum,  idNum);
-    params.append(GF_ENTRIES.phone,  phone);
-    params.append(GF_ENTRIES.lineid, lineId);
-    params.append(GF_ENTRIES.q1,     answers['q1'] || '');
-    params.append(GF_ENTRIES.q2,     answers['q2'] || '');
-    params.append(GF_ENTRIES.q3,     answers['q3'] || '');
-    params.append(GF_ENTRIES.q4,     answers['q4'] || '');
-
-    var iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    iframe.name = 'gf_submit_' + Date.now();
-    document.body.appendChild(iframe);
-
-    var form = document.createElement('form');
-    form.method = 'POST';
-    form.action = GF_ACTION;
-    form.target = iframe.name;
-    form.innerHTML = '';
-
-    params.forEach(function(val, key) {
-      var input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = key;
-      input.value = val;
-      form.appendChild(input);
+    var response = await fetch(SUPABASE_URL + '/rest/v1/leads', {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_PUBLISHABLE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_PUBLISHABLE_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(leadPayload)
     });
 
-    document.body.appendChild(form);
-    form.submit();
-
-    // 清理
-    setTimeout(function() {
-      if (form.parentNode) form.parentNode.removeChild(form);
-    }, 5000);
+    if (!response.ok) {
+      throw new Error('Supabase insert failed: ' + response.status);
+    }
   } catch(err) {
-    console.warn('Google Form submit error:', err);
+    console.warn('Supabase submit error:', err);
+    showModal('⚠️ 提示', '資料送出失敗，請稍後再試，或直接加入 LINE 聯繫專員。');
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = submitBtn.dataset.originalText || '送出';
+    }
+    return;
   }
 
   // --- FB Pixel Events ---
@@ -1715,6 +1706,20 @@ function submitForm(e) {
 // LINE CLICK TRACKING
 // ============================================================
 function trackLineClick() {
+  if (window.__lastLeadId) {
+    fetch(SUPABASE_URL + '/rest/v1/rpc/mark_line_clicked', {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_PUBLISHABLE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_PUBLISHABLE_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ lead_id: window.__lastLeadId })
+    }).catch(function(err) {
+      console.warn('Line click update error:', err);
+    });
+  }
+
   if (typeof fbq !== 'undefined') {
     fbq('trackCustom', 'LineAddFriend', {
       content_name: '企業LINE加好友',
