@@ -163,7 +163,7 @@
               <option value="invalid">無效</option>
             </select>
           </div>
-          <button onclick="loadLeads()">重新整理</button>
+          <button id="refresh-btn" onclick="loadLeads()">刷新訂單</button>
           <button id="export-btn" class="secondary" onclick="exportCSV()">匯出 CSV</button>
         </div>
         <p id="export-note" class="notice export-note">未勾選時，會匯出目前篩選結果。</p>
@@ -271,18 +271,31 @@
     }
 
     async function loadLeads() {
+      const refreshBtn = document.getElementById('refresh-btn');
+      if (refreshBtn) {
+        refreshBtn.disabled = true;
+        refreshBtn.textContent = '刷新中...';
+      }
       const { data, error } = await client
         .from('leads')
         .select('*')
         .order('created_at', { ascending: false });
       if (error) {
         alert('讀取名單失敗：' + error.message);
+        if (refreshBtn) {
+          refreshBtn.disabled = false;
+          refreshBtn.textContent = '刷新訂單';
+        }
         return;
       }
       leads = data || [];
       selectedLeadIds = new Set([...selectedLeadIds].filter(id => leads.some(lead => lead.id === id)));
       renderStats();
       renderLeads();
+      if (refreshBtn) {
+        refreshBtn.disabled = false;
+        refreshBtn.textContent = '刷新訂單';
+      }
     }
 
     function renderStats() {
