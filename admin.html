@@ -59,7 +59,7 @@
     button:disabled { opacity: .55; cursor: not-allowed; }
     .toolbar {
       display: grid;
-      grid-template-columns: 1fr 180px 140px 120px;
+      grid-template-columns: 1fr 180px 140px 160px;
       gap: 10px;
       align-items: end;
     }
@@ -85,6 +85,8 @@
       font-size: 13px;
     }
     th { background: #f8fafb; font-size: 12px; color: #5d6b76; }
+    .select-col { width: 42px; text-align: center; }
+    .select-col input { width: auto; transform: scale(1.15); }
     .muted { color: #6b7882; font-size: 12px; }
     .pill {
       display: inline-block;
@@ -99,6 +101,7 @@
     .hidden { display: none !important; }
     .notice { color: #6b7882; font-size: 13px; line-height: 1.6; }
     .error { color: #b42318; }
+    .export-note { margin: 8px 0 0; }
     @media (max-width: 760px) {
       main { padding: 10px; }
       .toolbar, .stats { grid-template-columns: 1fr; }
@@ -118,11 +121,14 @@
   <main>
     <section id="login-panel" class="panel login-box">
       <h2>管理員登入</h2>
-      <p class="notice">請使用管理員信箱登入。系統會寄送一次性登入連結。</p>
-      <label for="admin-email">管理員信箱</label>
-      <input id="admin-email" type="email" value="allanfetzer379@gmail.com" autocomplete="email" />
+      <p class="notice">請輸入管理員帳號與密碼。</p>
+      <label for="admin-username">帳號</label>
+      <input id="admin-username" type="text" value="admin" autocomplete="username" />
       <div style="height:12px"></div>
-      <button id="login-btn" onclick="sendLoginLink()">寄送登入連結</button>
+      <label for="admin-password">密碼</label>
+      <input id="admin-password" type="password" autocomplete="current-password" />
+      <div style="height:12px"></div>
+      <button id="login-btn" onclick="loginWithPassword()">登入</button>
       <p id="login-msg" class="notice"></p>
     </section>
 
@@ -153,14 +159,16 @@
             </select>
           </div>
           <button onclick="loadLeads()">重新整理</button>
-          <button class="secondary" onclick="exportCSV()">匯出 CSV</button>
+          <button id="export-btn" class="secondary" onclick="exportCSV()">匯出 CSV</button>
         </div>
+        <p id="export-note" class="notice export-note">未勾選時，會匯出目前篩選結果。</p>
       </div>
 
       <div class="panel table-wrap">
         <table>
           <thead>
             <tr>
+              <th class="select-col"><input id="select-all" type="checkbox" onchange="toggleAllVisible(this.checked)" /></th>
               <th>提交時間</th>
               <th>客戶</th>
               <th>聯絡</th>
@@ -180,6 +188,8 @@
   <script>
     const SUPABASE_URL = 'https://syddbzqkhotpyyoqykof.supabase.co';
     const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_STtS281jKjrPZ_zfOiWvdA_pdB7kg1Q';
+    const ADMIN_LOGIN_USERNAME = 'admin';
+    const ADMIN_LOGIN_EMAIL = 'allanfetzer379@gmail.com';
     const client = supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
     const statusLabels = {
       new: '新客戶',
@@ -190,6 +200,7 @@
       invalid: '無效'
     };
     let leads = [];
+    let selectedLeadIds = new Set();
 
     function escapeHTML(value) {
       return String(value || '').replace(/[&<>"']/g, ch => ({
@@ -201,19 +212,27 @@
       return value ? new Date(value).toLocaleString('zh-TW', { hour12: false }) : '';
     }
 
-    async function sendLoginLink() {
-      const email = document.getElementById('admin-email').value.trim();
+    async function loginWithPassword() {
+      const username = document.getElementById('admin-username').value.trim();
+      const password = document.getElementById('admin-password').value;
       const msg = document.getElementById('login-msg');
       const btn = document.getElementById('login-btn');
       msg.textContent = '';
+      msg.className = 'notice';
+      if (username !== ADMIN_LOGIN_USERNAME || !password) {
+        msg.textContent = '帳號或密碼錯誤。';
+        msg.className = 'notice error';
+        return;
+      }
       btn.disabled = true;
-      const { error } = await client.auth.signInWithOtp({
-        email,
-        options: { emailRedirectTo: window.location.href.split('#')[0] }
+      const { error } = await client.auth.signInWithPassword({
+        email: ADMIN_LOGIN_EMAIL,
+        password
       });
       btn.disabled = false;
-      msg.textContent = error ? '登入信寄送失敗：' + error.message : '登入連結已寄出，請到信箱點擊連結。';
+      msg.textContent = error ? '帳號或密碼錯誤。' : '登入成功，正在載入名單...';
       msg.className = error ? 'notice error' : 'notice';
+      if (!error) await checkSession();
     }
 
     async function signOut() {
@@ -242,6 +261,7 @@
         return;
       }
       leads = data || [];
+      selectedLeadIds = new Set([...selectedLeadIds].filter(id => leads.some(lead => lead.id === id)));
       renderStats();
       renderLeads();
     }
@@ -270,6 +290,9 @@
       document.getElementById('empty-msg').classList.toggle('hidden', data.length > 0);
       rows.innerHTML = data.map(lead => `
         <tr>
+          <td class="select-col">
+            <input type="checkbox" ${selectedLeadIds.has(lead.id) ? 'checked' : ''} onchange="toggleLeadSelection('${lead.id}', this.checked)" />
+          </td>
           <td>
             ${escapeHTML(formatDate(lead.created_at))}
             <div class="muted">${escapeHTML(lead.source_url || '')}</div>
@@ -311,6 +334,42 @@
           </td>
         </tr>
       `).join('');
+      updateSelectionUI(data);
+    }
+
+    function toggleLeadSelection(id, checked) {
+      if (checked) selectedLeadIds.add(id);
+      else selectedLeadIds.delete(id);
+      updateSelectionUI(filteredLeads());
+    }
+
+    function toggleAllVisible(checked) {
+      filteredLeads().forEach(lead => {
+        if (checked) selectedLeadIds.add(lead.id);
+        else selectedLeadIds.delete(lead.id);
+      });
+      renderLeads();
+    }
+
+    function updateSelectionUI(data) {
+      const selectedCount = selectedLeadIds.size;
+      const selectAll = document.getElementById('select-all');
+      const exportBtn = document.getElementById('export-btn');
+      const exportNote = document.getElementById('export-note');
+      const visibleIds = data.map(lead => lead.id);
+      const visibleSelected = visibleIds.filter(id => selectedLeadIds.has(id)).length;
+      if (selectAll) {
+        selectAll.checked = data.length > 0 && visibleSelected === data.length;
+        selectAll.indeterminate = visibleSelected > 0 && visibleSelected < data.length;
+      }
+      if (exportBtn) {
+        exportBtn.textContent = selectedCount > 0 ? `匯出已勾選 ${selectedCount} 筆` : '匯出 CSV';
+      }
+      if (exportNote) {
+        exportNote.textContent = selectedCount > 0
+          ? '會匯出已勾選的訂單。'
+          : '未勾選時，會匯出目前篩選結果。';
+      }
     }
 
     async function updateLead(id, patch) {
@@ -333,7 +392,13 @@
 
     function exportCSV() {
       const cols = ['created_at','name','age','city','id_number','phone','line_id','q1_existing_loan','q2_bank_status','q3_amount_needed','q4_foreign_currency_account','status','notes','source_url'];
-      const csv = [cols.join(',')].concat(filteredLeads().map(row =>
+      const selectedRows = leads.filter(row => selectedLeadIds.has(row.id));
+      const exportRows = selectedRows.length > 0 ? selectedRows : filteredLeads();
+      if (exportRows.length === 0) {
+        alert('目前沒有可匯出的名單。');
+        return;
+      }
+      const csv = [cols.join(',')].concat(exportRows.map(row =>
         cols.map(col => '"' + String(row[col] || '').replace(/"/g, '""') + '"').join(',')
       )).join('\n');
       const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
