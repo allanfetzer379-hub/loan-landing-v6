@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>客戶名單後台 | 群誠資產</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    if (!window.supabase) {
+      document.write('<script src="https://unpkg.com/@supabase/supabase-js@2"><\\/script>');
+    }
+  </script>
   <style>
     * { box-sizing: border-box; }
     body {
@@ -190,7 +195,7 @@
     const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_STtS281jKjrPZ_zfOiWvdA_pdB7kg1Q';
     const ADMIN_LOGIN_USERNAME = 'admin';
     const ADMIN_LOGIN_EMAIL = 'allanfetzer379@gmail.com';
-    const client = supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+    const client = window.supabase ? supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY) : null;
     const statusLabels = {
       new: '新客戶',
       contacted: '已聯繫',
@@ -219,6 +224,11 @@
       const btn = document.getElementById('login-btn');
       msg.textContent = '';
       msg.className = 'notice';
+      if (!client) {
+        msg.textContent = '登入元件載入失敗，請重新整理後再試。';
+        msg.className = 'notice error';
+        return;
+      }
       if (username !== ADMIN_LOGIN_USERNAME || !password) {
         msg.textContent = '帳號或密碼錯誤。';
         msg.className = 'notice error';
@@ -236,11 +246,20 @@
     }
 
     async function signOut() {
+      if (!client) return;
       await client.auth.signOut();
       location.reload();
     }
 
     async function checkSession() {
+      if (!client) {
+        const msg = document.getElementById('login-msg');
+        if (msg) {
+          msg.textContent = '登入元件載入失敗，請重新整理後再試。';
+          msg.className = 'notice error';
+        }
+        return;
+      }
       await client.auth.getSession();
       const { data } = await client.auth.getUser();
       if (!data.user) return;
