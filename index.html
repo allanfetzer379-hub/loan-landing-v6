@@ -324,6 +324,8 @@
       padding: 24px 20px;
       margin: 28px 0;
       color: #fff;
+      border: 3px solid #fff;
+      box-shadow: 0 10px 28px rgba(0, 120, 0, .28);
     }
     @media (max-width: 480px) {
       .quiz-section { padding: 18px 14px; border-radius: 8px; }
@@ -343,6 +345,24 @@
     .quiz-section .quiz-header p {
       font-size: 13px;
       opacity: .9;
+    }
+    .quiz-attention {
+      background: #fff;
+      color: #087b28;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 900;
+      box-shadow: 0 5px 14px rgba(0,0,0,.18);
+    }
+    .quiz-attention small {
+      display: block;
+      color: #42634b;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 4px;
     }
 
     /* Progress Bar */
@@ -442,13 +462,13 @@
       .options-grid { grid-template-columns: 1fr; }
     }
     .option-btn {
-      background: rgba(255,255,255,.15);
-      border: 2px solid rgba(255,255,255,.4);
+      background: rgba(255,255,255,.22);
+      border: 2px solid rgba(255,255,255,.7);
       border-radius: 8px;
       color: #fff;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 10px 12px;
+      font-size: 14px;
+      font-weight: 800;
+      padding: 13px 12px;
       cursor: pointer;
       transition: all .2s;
       text-align: left;
@@ -540,12 +560,12 @@
     .cta-btn:hover { background: #f0fff0; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
     .cta-btn:active { transform: scale(.98); }
     .next-btn {
-      background: rgba(255,255,255,.2);
-      border: 2px solid rgba(255,255,255,.6);
-      color: #fff;
-      font-size: 14px;
-      font-weight: 700;
-      padding: 12px 24px;
+      background: #fff;
+      border: 2px solid #fff;
+      color: #008b25;
+      font-size: 16px;
+      font-weight: 900;
+      padding: 14px 24px;
       border-radius: 8px;
       cursor: pointer;
       margin-top: 14px;
@@ -554,7 +574,7 @@
       width: 100%;
       -webkit-tap-highlight-color: transparent;
     }
-    .next-btn:hover { background: rgba(255,255,255,.3); }
+    .next-btn:hover { background: #efffef; }
     .ssl-badge {
       text-align: center;
       font-size: 11px;
@@ -1256,9 +1276,13 @@
 
       <!-- ===== QUIZ FORM ===== -->
       <div class="quiz-section" id="quiz-section">
+        <div class="quiz-attention">
+          立即選擇金額，免費試算可評估額度
+          <small>只需完成 3 個步驟，約 1 分鐘</small>
+        </div>
         <div class="quiz-header">
-          <h3>💰 先試算您需要的周轉金額</h3>
-          <p>先選擇需求金額，系統再依條件做初步分類，讓專員更快協助確認方案。</p>
+          <h3>💰 您想申請多少周轉金？</h3>
+          <p>先點選需求金額，再回答基本條件，即可查看初步評估結果。</p>
         </div>
 
         <!-- Progress -->
@@ -1276,14 +1300,14 @@
           <div class="question-block">
             <p class="question-text">Q1. 您目前最需要試算的周轉金額是？</p>
             <div class="options-grid">
-              <button class="option-btn" data-q="q3" data-v="10萬以下" onclick="selectOption(this)">
-                <span class="option-icon"></span> 10萬以下
-              </button>
               <button class="option-btn" data-q="q3" data-v="10萬-20萬" onclick="selectOption(this)">
                 <span class="option-icon"></span> 10萬 – 20萬
               </button>
-              <button class="option-btn" data-q="q3" data-v="20萬-50萬" onclick="selectOption(this)">
-                <span class="option-icon"></span> 20萬 – 50萬
+              <button class="option-btn" data-q="q3" data-v="20萬-30萬" onclick="selectOption(this)">
+                <span class="option-icon"></span> 20萬 – 30萬
+              </button>
+              <button class="option-btn" data-q="q3" data-v="30萬-50萬" onclick="selectOption(this)">
+                <span class="option-icon"></span> 30萬 – 50萬
               </button>
               <button class="option-btn" data-q="q3" data-v="50萬以上" onclick="selectOption(this)">
                 <span class="option-icon"></span> 50萬以上
@@ -1291,7 +1315,7 @@
             </div>
           </div>
 
-          <button class="next-btn" onclick="nextStep(1)">查看初步條件 →</button>
+          <button class="next-btn" onclick="nextStep(1)">下一步，開始免費試算額度 →</button>
         </div>
 
         <!-- STEP 2 -->
