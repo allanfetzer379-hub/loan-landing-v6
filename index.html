@@ -525,14 +525,14 @@
     .success-screen {
       display: none;
       text-align: center;
-      padding: 10px 0;
+      padding: 8px 0 4px;
     }
     .success-screen .check-icon {
       font-size: 52px;
       margin-bottom: 10px;
     }
     .success-screen h3 {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 900;
       margin-bottom: 8px;
     }
@@ -545,22 +545,43 @@
       line-height: 1.6;
       margin-bottom: 18px;
     }
-    /* LINE 引導區塊 */
-    .line-guide-box {
-      background: rgba(255,255,255,.18);
-      border: 2px dashed rgba(255,255,255,.7);
-      border-radius: 12px;
-      padding: 18px 16px;
-      margin-top: 10px;
-    }
-    .line-guide-box .line-step-title {
+    .success-next-alert {
+      background: #fff3cd;
+      color: #5c4200;
+      border: 2px solid #ffd75a;
+      border-radius: 10px;
+      padding: 12px 14px;
       font-size: 15px;
       font-weight: 900;
-      margin-bottom: 12px;
+      line-height: 1.45;
+      margin: 0 0 14px;
+      box-shadow: 0 4px 14px rgba(0,0,0,.16);
+    }
+    /* LINE 引導區塊 */
+    .line-guide-box {
+      background: #fff;
+      color: #102216;
+      border: 3px solid #00e15a;
+      border-radius: 14px;
+      padding: 18px 16px 16px;
+      margin-top: 10px;
+      box-shadow: 0 10px 26px rgba(0,0,0,.24);
+    }
+    .line-guide-box .line-step-title {
+      font-size: 18px;
+      font-weight: 900;
+      color: #008f26;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
+    }
+    .line-guide-subtitle {
+      color: #36443b;
+      font-size: 13px;
+      line-height: 1.45;
+      margin: 0 0 12px;
     }
     .line-steps {
       list-style: none;
@@ -569,16 +590,17 @@
     }
     .line-steps li {
       font-size: 13px;
-      padding: 6px 0;
+      color: #24352a;
+      padding: 7px 0;
       display: flex;
       align-items: flex-start;
       gap: 8px;
-      border-bottom: 1px solid rgba(255,255,255,.15);
+      border-bottom: 1px solid #e8f4ea;
     }
     .line-steps li:last-child { border-bottom: none; }
     .line-step-num {
-      background: #fff;
-      color: #00b900;
+      background: #00b900;
+      color: #fff;
       border-radius: 50%;
       width: 20px; height: 20px;
       display: inline-flex; align-items: center; justify-content: center;
@@ -591,36 +613,42 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      background: #fff;
-      color: #00b900;
-      font-size: 16px;
+      background: #00b900;
+      color: #fff;
+      font-size: 19px;
       font-weight: 900;
-      padding: 14px 20px;
-      border-radius: 10px;
+      padding: 18px 18px;
+      border-radius: 12px;
       cursor: pointer;
-      border: none;
+      border: 2px solid #00a100;
       width: 100%;
       text-decoration: none;
-      box-shadow: 0 4px 14px rgba(0,0,0,.2);
+      box-shadow: 0 8px 20px rgba(0,122,0,.35);
       transition: all .2s;
       -webkit-tap-highlight-color: transparent;
+      animation: linePulse 1.7s ease-in-out infinite;
     }
-    .line-add-btn:hover { background: #f0fff0; transform: translateY(-2px); }
+    .line-add-btn:hover { background: #00a900; transform: translateY(-2px); }
     .line-add-btn:active { transform: scale(.98); }
     .line-add-btn .line-logo {
-      width: 28px; height: 28px;
-      background: #00b900;
+      width: 32px; height: 32px;
+      background: #fff;
       border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
-      color: #fff; font-size: 16px; font-weight: 900;
+      color: #00b900; font-size: 18px; font-weight: 900;
+    }
+    @keyframes linePulse {
+      0%, 100% { box-shadow: 0 8px 20px rgba(0,122,0,.35); transform: translateY(0); }
+      50% { box-shadow: 0 12px 28px rgba(0,185,0,.52); transform: translateY(-1px); }
     }
     .line-id-display {
       margin-top: 10px;
-      font-size: 12px;
-      opacity: .8;
+      font-size: 13px;
+      color: #445047;
     }
     .line-id-display strong {
-      background: rgba(255,255,255,.2);
+      background: #e9f9ed;
+      color: #008f26;
       padding: 2px 8px;
       border-radius: 4px;
       font-size: 13px;
@@ -1326,14 +1354,18 @@
         <!-- SUCCESS + LINE GUIDE -->
         <div class="success-screen" id="success-screen">
           <div class="check-icon">✅</div>
-          <h3>資料已送達群誠資產！</h3>
-          <p>感謝您的信任！群誠資產專員已收到您的資料，<br/>正在為您比對最佳媒合方案，請完成最後一步 ↓</p>
+          <h3>申請資料已送出，還差最後一步！</h3>
+          <p>為了讓專員能快速和您確認額度，請立即加入群誠資產 LINE。</p>
+          <div class="success-next-alert">
+            請現在點下方綠色按鈕加入 LINE，專員才方便和您一對一溝通。
+          </div>
 
           <!-- LINE 引導區塊 -->
           <div class="line-guide-box">
             <div class="line-step-title">
-              📲 最後一步！加入群誠資產 LINE 才算完成申請
+              📲 立即加入 LINE，完成後續聯繫
             </div>
+            <p class="line-guide-subtitle">表單已收到，接下來請到 LINE 傳送「我要申請」，讓專員確認您的資料。</p>
             <ul class="line-steps">
               <li>
                 <span class="line-step-num">1</span>
@@ -1345,13 +1377,13 @@
               </li>
               <li>
                 <span class="line-step-num">3</span>
-                <span>專員將在 <strong>30分鐘內</strong> 透過 LINE 回覆您的核貸方案與額度</span>
+                <span>專員將透過 LINE 與您說明可評估方案與後續資料</span>
               </li>
             </ul>
             <!-- ⚠️ 請將下方 href 替換為您的企業 LINE 連結，例如 https://line.me/R/ti/p/@xxxxxxxx -->
             <a href="https://line.me/R/ti/p/@246zqrik" target="_blank" class="line-add-btn" id="line-add-btn" onclick="trackLineClick()">
               <span class="line-logo">L</span>
-              立即加入群誠資產 LINE，確認您的核貸額度
+              立即加入 LINE 與專員溝通
             </a>
             <div class="line-id-display">
               LINE ID：<strong id="line-official-id">@246zqrik</strong>（請複製搜尋加入）
@@ -1716,6 +1748,10 @@ async function submitForm(e) {
 
   // 滾動到成功畫面
   document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setTimeout(function() {
+    var lineBox = document.querySelector('.line-guide-box');
+    if (lineBox) lineBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 700);
 }
 
 // ============================================================
