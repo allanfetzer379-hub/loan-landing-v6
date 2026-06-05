@@ -12,111 +12,113 @@
   </script>
   <style>
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: "Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif;
-      background: #f5f6f7;
-      color: #172026;
-    }
-    header {
-      background: #0a7f20;
-      color: #fff;
-      padding: 14px 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    header h1 { margin: 0; font-size: 20px; }
-    main { max-width: 1180px; margin: 0 auto; padding: 18px; }
-    .panel {
-      background: #fff;
-      border: 1px solid #e3e7ea;
-      border-radius: 8px;
-      padding: 16px;
-      box-shadow: 0 1px 4px rgba(0,0,0,.04);
-      margin-bottom: 14px;
-    }
-    .login-box { max-width: 420px; margin: 48px auto; }
-    label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
-    input, select, textarea {
-      width: 100%;
-      border: 1px solid #cfd7de;
-      border-radius: 6px;
-      padding: 9px 10px;
-      font: inherit;
-      background: #fff;
-    }
-    textarea { min-height: 72px; resize: vertical; }
-    button {
-      border: 0;
-      border-radius: 6px;
-      background: #0a7f20;
-      color: #fff;
-      padding: 9px 13px;
-      font: inherit;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    button.secondary { background: #eef2f4; color: #172026; }
-    button.danger { background: #b42318; }
+    body { margin: 0; font-family: "Noto Sans TC","Microsoft JhengHei",Arial,sans-serif; background: #eef1f5; color: #142033; }
+    header { height: 68px; background: #121d31; color: #fff; padding: 0 36px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    header h1 { margin: 0; font-size: 19px; letter-spacing: 0; }
+    .header-sub { color: #8290a8; font-size: 13px; font-weight: 400; margin-left: 10px; }
+    #user-bar { display: flex; align-items: center; gap: 16px; color: #aeb9cb; font-size: 13px; }
+    main { max-width: 1320px; margin: 0 auto; padding: 30px 22px; }
+    .panel { background: #fff; border: 1px solid #dce2ea; border-radius: 8px; box-shadow: 0 1px 3px rgba(22,35,55,.04); margin-bottom: 18px; }
+    .login-box { max-width: 420px; margin: 48px auto; padding: 22px; }
+    label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #46546a; }
+    input, select, textarea { width: 100%; border: 1px solid #d4dce6; border-radius: 6px; padding: 9px 10px; font: inherit; background: #fff; color: #172236; }
+    textarea { min-height: 96px; resize: vertical; }
+    button { border: 1px solid transparent; border-radius: 6px; background: #1368b7; color: #fff; padding: 8px 13px; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+    button.secondary { background: #fff; color: #536278; border-color: #d9e0e8; }
+    button.danger { background: #fff; color: #c73535; border-color: #efcaca; }
     button:disabled { opacity: .55; cursor: not-allowed; }
-    .toolbar {
-      display: grid;
-      grid-template-columns: 1fr 180px 140px 160px;
-      gap: 10px;
-      align-items: end;
-    }
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-    .stat {
-      background: #f7faf8;
-      border: 1px solid #dbeee0;
-      border-radius: 8px;
-      padding: 12px;
-    }
-    .stat b { display: block; font-size: 24px; color: #0a7f20; }
-    .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; min-width: 1080px; }
-    th, td {
-      padding: 10px 8px;
-      border-bottom: 1px solid #e6ebef;
-      text-align: left;
-      vertical-align: top;
-      font-size: 13px;
-    }
-    th { background: #f8fafb; font-size: 12px; color: #5d6b76; }
-    .select-col { width: 42px; text-align: center; }
-    .select-col input { width: auto; transform: scale(1.15); }
-    .muted { color: #6b7882; font-size: 12px; }
-    .pill {
-      display: inline-block;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: #edf7ef;
-      color: #0a7f20;
-      font-size: 12px;
-      font-weight: 700;
-    }
-    .row-actions { display: flex; gap: 6px; flex-wrap: wrap; }
     .hidden { display: none !important; }
-    .notice { color: #6b7882; font-size: 13px; line-height: 1.6; }
+    .notice { color: #7c899d; font-size: 13px; line-height: 1.6; }
     .error { color: #b42318; }
-    .export-note { margin: 8px 0 0; }
-    @media (max-width: 760px) {
-      main { padding: 10px; }
-      .toolbar, .stats { grid-template-columns: 1fr; }
-      header h1 { font-size: 17px; }
+    .stats { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; margin-bottom: 24px; }
+    .stat { --accent:#4f6cff; position: relative; background: #fff; border: 1px solid #dce2ea; border-radius: 8px; padding: 20px 18px 18px 24px; min-height: 116px; overflow: hidden; }
+    .stat::before { content:""; position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--accent); }
+    .stat b { display: block; font-size: 34px; line-height: 1; color: #101a2d; margin-bottom: 10px; }
+    .stat span { color: #748299; font-size: 13px; }
+    .filters { padding: 18px 22px; }
+    .filter-row { display: flex; align-items: end; gap: 12px; flex-wrap: wrap; }
+    .quick-dates { display: flex; border: 1px solid #d9e0e8; border-radius: 7px; overflow: hidden; }
+    .quick-dates button { border: 0; border-right: 1px solid #d9e0e8; border-radius: 0; background: #fff; color: #607088; padding: 10px 18px; font-weight: 500; }
+    .quick-dates button:last-child { border-right: 0; }
+    .quick-dates button.active { background: #eaf3fc; color: #1368b7; font-weight: 800; }
+    .date-field { width: 160px; }
+    .status-field { width: 150px; }
+    .filter-spacer { flex: 1; }
+    .search-wrap { display: flex; gap: 8px; min-width: 330px; }
+    .list-panel { overflow: hidden; }
+    .list-head { height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; border-bottom: 1px solid #dce2ea; }
+    .list-head h2 { margin: 0; font-size: 18px; }
+    .list-head-right { display: flex; align-items: center; gap: 12px; color: #8794a8; font-size: 13px; }
+    .select-all-wrap { display: flex; align-items: center; gap: 7px; color: #68778e; font-size: 13px; }
+    .select-all-wrap input, .lead-check { width: auto; }
+    .lead-list { min-height: 140px; }
+    .lead-row { display: grid; grid-template-columns: 32px minmax(0,1fr) auto; gap: 12px; align-items: center; padding: 14px 24px; border-bottom: 1px solid #e7ebf0; }
+    .lead-row:last-child { border-bottom: 0; }
+    .lead-row:hover { background: #f8fafc; }
+    .lead-summary { min-width: 0; }
+    .lead-title-line { display: flex; align-items: center; gap: 9px; min-width: 0; margin-bottom: 7px; }
+    .lead-index { color: #9aa7ba; font-size: 13px; width: 28px; flex: 0 0 auto; }
+    .lead-name { font-size: 16px; font-weight: 800; color: #111c30; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .tag { display:inline-flex; align-items:center; padding:3px 7px; border-radius:4px; font-size:11px; font-weight:700; white-space:nowrap; }
+    .tag-new { background:#dff7e9; color:#087b42; }
+    .tag-contacted { background:#e8f2ff; color:#2168ae; }
+    .tag-line_added { background:#e5f8ea; color:#078532; }
+    .tag-approved { background:#eee8ff; color:#6741c7; }
+    .tag-rejected { background:#fff2d7; color:#9b6100; }
+    .tag-invalid { background:#fde9e9; color:#b42e2e; }
+    .tag-line { background:#f3e4ff; color:#9637b4; }
+    .lead-meta { display:flex; align-items:center; gap:20px; white-space:nowrap; overflow:hidden; color:#526178; font-size:13px; }
+    .lead-meta span { overflow:hidden; text-overflow:ellipsis; }
+    .lead-meta strong { color:#19263a; }
+    .lead-time { color:#9aa7ba; font-size:12px; margin-top:7px; }
+    .lead-actions { display:flex; align-items:center; justify-content:flex-end; gap:6px; flex-wrap:wrap; max-width:450px; }
+    .status-btn { background:#fff; color:#65738a; border-color:#dce2ea; padding:6px 9px; font-weight:500; }
+    .status-btn.active { background:#eaf3fc; color:#1368b7; border-color:#bcd6ed; font-weight:800; }
+    .empty { padding: 36px; text-align: center; }
+    .drawer-backdrop { position:fixed; inset:0; background:rgba(13,24,42,.34); z-index:1990; }
+    .detail-drawer { position:fixed; top:0; right:0; bottom:0; width:min(520px,100%); background:#fff; z-index:2000; box-shadow:-8px 0 26px rgba(16,29,49,.18); display:flex; flex-direction:column; }
+    .drawer-head { padding:20px 22px; border-bottom:1px solid #e2e7ed; display:flex; align-items:center; justify-content:space-between; }
+    .drawer-head h2 { margin:0; font-size:19px; }
+    .drawer-body { padding:20px 22px; overflow:auto; }
+    .detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
+    .detail-item { border:1px solid #e2e7ed; border-radius:7px; padding:10px 12px; min-width:0; }
+    .detail-item label { color:#8a97a9; font-size:11px; margin-bottom:4px; }
+    .detail-item div { overflow-wrap:anywhere; }
+    .detail-section { border-top:1px solid #e5eaf0; padding-top:18px; margin-top:18px; }
+    .detail-section h3 { margin:0 0 12px; font-size:15px; }
+    .drawer-actions { display:flex; gap:8px; flex-wrap:wrap; }
+    .export-note { margin: 10px 0 0; }
+    @media (max-width: 1050px) {
+      .stats { grid-template-columns: repeat(3,1fr); }
+      .lead-row { grid-template-columns:28px minmax(0,1fr); }
+      .lead-actions { grid-column:2; justify-content:flex-start; max-width:none; }
+    }
+    @media (max-width: 720px) {
+      header { height:auto; padding:14px 16px; flex-wrap:wrap; }
+      header h1 { font-size:17px; }
+      .header-sub, #user-email { display:none; }
+      main { padding:14px 10px; }
+      .stats { grid-template-columns:repeat(2,1fr); gap:8px; }
+      .stat { min-height:90px; padding:14px 12px 12px 18px; }
+      .stat b { font-size:27px; margin-bottom:7px; }
+      .filters { padding:12px; }
+      .quick-dates { width:100%; overflow-x:auto; }
+      .quick-dates button { flex:1; padding:9px 12px; }
+      .date-field, .status-field, .search-wrap { width:100%; min-width:0; }
+      .filter-spacer { display:none; }
+      .list-head { height:auto; padding:14px; gap:10px; flex-wrap:wrap; }
+      .lead-row { display:block; padding:14px; }
+      .lead-check { margin-bottom:9px; }
+      .lead-meta { gap:8px 14px; flex-wrap:wrap; white-space:normal; }
+      .lead-actions { margin-top:12px; justify-content:flex-start; max-width:none; }
+      .status-btn { padding:7px 9px; }
+      .detail-grid { grid-template-columns:1fr; }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>群誠資產｜客戶名單後台</h1>
+    <h1>群誠交單系統 <span class="header-sub">客戶申請管理</span></h1>
     <div id="user-bar" class="hidden">
       <span id="user-email"></span>
       <button class="secondary" onclick="signOut()">登出</button>
@@ -139,20 +141,31 @@
 
     <section id="app-panel" class="hidden">
       <div class="stats">
-        <div class="stat"><span>全部名單</span><b id="stat-total">0</b></div>
-        <div class="stat"><span>新客戶</span><b id="stat-new">0</b></div>
-        <div class="stat"><span>已聯繫</span><b id="stat-contacted">0</b></div>
-        <div class="stat"><span>已成交</span><b id="stat-approved">0</b></div>
+        <div class="stat" style="--accent:#5865f2"><b id="stat-filtered">0</b><span>篩選結果</span></div>
+        <div class="stat" style="--accent:#3185ff"><b id="stat-today">0</b><span>當日新增</span></div>
+        <div class="stat" style="--accent:#dd8700"><b id="stat-new">0</b><span>新客戶</span></div>
+        <div class="stat" style="--accent:#8a55ed"><b id="stat-contacted">0</b><span>已聯繫</span></div>
+        <div class="stat" style="--accent:#08a56a"><b id="stat-line-added">0</b><span>已添加 LINE</span></div>
+        <div class="stat" style="--accent:#dc3030"><b id="stat-invalid">0</b><span>無效</span></div>
       </div>
 
-      <div class="panel">
-        <div class="toolbar">
-          <div>
-            <label for="search">搜尋</label>
-            <input id="search" placeholder="姓名、電話、LINE、縣市、身分證" oninput="renderLeads()" />
+      <div class="panel filters">
+        <div class="filter-row">
+          <div class="quick-dates">
+            <button type="button" data-days="0" onclick="setQuickDate(0,this)">當日</button>
+            <button type="button" data-days="1" onclick="setQuickDate(1,this)">昨日</button>
+            <button type="button" data-days="3" onclick="setQuickDate(3,this)">近3日</button>
+            <button type="button" data-days="7" onclick="setQuickDate(7,this)">近7日</button>
+            <button type="button" data-days="30" onclick="setQuickDate(30,this)">近30日</button>
           </div>
-          <div>
-            <label for="status-filter">狀態</label>
+          <div class="date-field">
+            <input id="date-from" type="date" aria-label="開始日期" onchange="clearQuickDate();renderLeads()" />
+          </div>
+          <span class="notice">—</span>
+          <div class="date-field">
+            <input id="date-to" type="date" aria-label="結束日期" onchange="clearQuickDate();renderLeads()" />
+          </div>
+          <div class="status-field">
             <select id="status-filter" onchange="renderLeads()">
               <option value="">全部</option>
               <option value="new">新客戶</option>
@@ -164,31 +177,38 @@
             </select>
           </div>
           <button id="refresh-btn" onclick="loadLeads()">刷新訂單</button>
-          <button id="export-btn" class="secondary" onclick="exportCSV()">匯出 CSV</button>
+          <div class="filter-spacer"></div>
+          <div class="search-wrap">
+            <input id="search" placeholder="搜尋姓名 / 手機 / LINE / 身分證" oninput="renderLeads()" />
+            <button type="button" onclick="renderLeads()">搜尋</button>
+          </div>
         </div>
         <p id="export-note" class="notice export-note">未勾選時，會匯出目前篩選結果。</p>
       </div>
 
-      <div class="panel table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th class="select-col"><input id="select-all" type="checkbox" onchange="toggleAllVisible(this.checked)" /></th>
-              <th>提交時間</th>
-              <th>客戶</th>
-              <th>聯絡</th>
-              <th>表單選項</th>
-              <th>狀態</th>
-              <th>備註</th>
-              <th>操作</th>
-            </tr>
-          </thead>
-          <tbody id="lead-rows"></tbody>
-        </table>
-        <p id="empty-msg" class="notice hidden">目前沒有符合條件的名單。</p>
+      <div class="panel list-panel">
+        <div class="list-head">
+          <h2>申請列表</h2>
+          <div class="list-head-right">
+            <label class="select-all-wrap"><input id="select-all" type="checkbox" onchange="toggleAllVisible(this.checked)" /> 全選目前結果</label>
+            <span id="result-count">0 筆</span>
+            <button id="export-btn" class="secondary" onclick="exportCSV()">匯出 CSV</button>
+          </div>
+        </div>
+        <div id="lead-list" class="lead-list"></div>
+        <p id="empty-msg" class="notice empty hidden">目前沒有符合條件的名單。</p>
       </div>
     </section>
   </main>
+
+  <div id="drawer-backdrop" class="drawer-backdrop hidden" onclick="closeDetails()"></div>
+  <aside id="detail-drawer" class="detail-drawer hidden" aria-label="客戶詳細資料">
+    <div class="drawer-head">
+      <h2 id="detail-title">客戶詳細資料</h2>
+      <button class="secondary" onclick="closeDetails()">關閉</button>
+    </div>
+    <div id="detail-body" class="drawer-body"></div>
+  </aside>
 
   <script>
     const SUPABASE_URL = 'https://syddbzqkhotpyyoqykof.supabase.co';
@@ -206,6 +226,7 @@
     };
     let leads = [];
     let selectedLeadIds = new Set();
+    let activeDetailId = null;
 
     function escapeHTML(value) {
       return String(value || '').replace(/[&<>"']/g, ch => ({
@@ -215,6 +236,21 @@
 
     function formatDate(value) {
       return value ? new Date(value).toLocaleString('zh-TW', { hour12: false }) : '';
+    }
+
+    function isSameDay(value, date) {
+      if (!value) return false;
+      const d = new Date(value);
+      return d.getFullYear() === date.getFullYear() &&
+        d.getMonth() === date.getMonth() &&
+        d.getDate() === date.getDate();
+    }
+
+    function dateInputValue(date) {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
     }
 
     async function loginWithPassword() {
@@ -292,6 +328,7 @@
       selectedLeadIds = new Set([...selectedLeadIds].filter(id => leads.some(lead => lead.id === id)));
       renderStats();
       renderLeads();
+      if (activeDetailId && leads.some(lead => lead.id === activeDetailId)) openDetails(activeDetailId);
       if (refreshBtn) {
         refreshBtn.disabled = false;
         refreshBtn.textContent = '刷新訂單';
@@ -299,74 +336,145 @@
     }
 
     function renderStats() {
-      document.getElementById('stat-total').textContent = leads.length;
+      const today = new Date();
+      document.getElementById('stat-filtered').textContent = filteredLeads().length;
+      document.getElementById('stat-today').textContent = leads.filter(x => isSameDay(x.created_at, today)).length;
       document.getElementById('stat-new').textContent = leads.filter(x => x.status === 'new').length;
       document.getElementById('stat-contacted').textContent = leads.filter(x => x.status === 'contacted').length;
-      document.getElementById('stat-approved').textContent = leads.filter(x => x.status === 'approved').length;
+      document.getElementById('stat-line-added').textContent = leads.filter(x => x.status === 'line_added').length;
+      document.getElementById('stat-invalid').textContent = leads.filter(x => x.status === 'invalid').length;
     }
 
     function filteredLeads() {
       const q = document.getElementById('search').value.trim().toLowerCase();
       const status = document.getElementById('status-filter').value;
+      const from = document.getElementById('date-from').value;
+      const to = document.getElementById('date-to').value;
       return leads.filter(lead => {
         if (status && lead.status !== status) return false;
+        if (from && new Date(lead.created_at) < new Date(from + 'T00:00:00')) return false;
+        if (to && new Date(lead.created_at) > new Date(to + 'T23:59:59')) return false;
         if (!q) return true;
         return [lead.name, lead.phone, lead.line_id, lead.city, lead.id_number]
           .some(value => String(value || '').toLowerCase().includes(q));
       });
     }
 
+    function setQuickDate(days, button) {
+      const today = new Date();
+      let from = new Date(today);
+      let to = new Date(today);
+      if (days === 1) {
+        from.setDate(today.getDate() - 1);
+        to = new Date(from);
+      } else if (days > 1) {
+        from.setDate(today.getDate() - (days - 1));
+      }
+      document.getElementById('date-from').value = dateInputValue(from);
+      document.getElementById('date-to').value = dateInputValue(to);
+      document.querySelectorAll('.quick-dates button').forEach(btn => btn.classList.remove('active'));
+      if (button) button.classList.add('active');
+      renderLeads();
+    }
+
+    function clearQuickDate() {
+      document.querySelectorAll('.quick-dates button').forEach(btn => btn.classList.remove('active'));
+    }
+
     function renderLeads() {
-      const rows = document.getElementById('lead-rows');
+      const list = document.getElementById('lead-list');
       const data = filteredLeads();
       document.getElementById('empty-msg').classList.toggle('hidden', data.length > 0);
-      rows.innerHTML = data.map(lead => `
-        <tr>
-          <td class="select-col">
-            <input type="checkbox" ${selectedLeadIds.has(lead.id) ? 'checked' : ''} onchange="toggleLeadSelection('${lead.id}', this.checked)" />
-          </td>
-          <td>
-            ${escapeHTML(formatDate(lead.created_at))}
-            <div class="muted">${escapeHTML(lead.source_url || '')}</div>
-          </td>
-          <td>
-            <strong>${escapeHTML(lead.name)}</strong>
-            <div class="muted">${escapeHTML(lead.age)} 歲｜${escapeHTML(lead.city)}</div>
-            <div class="muted">ID：${escapeHTML(lead.id_number)}</div>
-          </td>
-          <td>
-            <div>電話：<a href="tel:${escapeHTML(lead.phone)}">${escapeHTML(lead.phone)}</a></div>
-            <div>LINE：${escapeHTML(lead.line_id)}</div>
-            <div class="muted">${lead.line_clicked ? '已點 LINE' : '尚未點 LINE'}</div>
-          </td>
-          <td>
-            <div>既有貸款：${escapeHTML(lead.q1_existing_loan)}</div>
-            <div>帳戶狀態：${escapeHTML(lead.q2_bank_status)}</div>
-            <div>需求金額：${escapeHTML(lead.q3_amount_needed)}</div>
-            <div>外幣帳戶：${escapeHTML(lead.q4_foreign_currency_account)}</div>
-          </td>
-          <td>
-            <span class="pill">${escapeHTML(statusLabels[lead.status] || lead.status)}</span>
-            <div style="height:6px"></div>
-            <select onchange="updateLead('${lead.id}', { status: this.value })">
-              ${Object.entries(statusLabels).map(([value, label]) =>
-                `<option value="${value}" ${lead.status === value ? 'selected' : ''}>${label}</option>`
-              ).join('')}
-            </select>
-          </td>
-          <td>
-            <textarea id="notes-${lead.id}">${escapeHTML(lead.notes || '')}</textarea>
-          </td>
-          <td>
-            <div class="row-actions">
-              <button onclick="saveNotes('${lead.id}')">存備註</button>
-              <button class="secondary" onclick="copyText('${escapeHTML(lead.phone)}')">複製電話</button>
-              <button class="secondary" onclick="copyText('${escapeHTML(lead.line_id)}')">複製 LINE</button>
+      document.getElementById('result-count').textContent = `${data.length} 筆・篩選中`;
+      list.innerHTML = data.map((lead, index) => `
+        <article class="lead-row">
+          <input class="lead-check" type="checkbox" ${selectedLeadIds.has(lead.id) ? 'checked' : ''} onchange="toggleLeadSelection('${lead.id}', this.checked)" />
+          <div class="lead-summary">
+            <div class="lead-title-line">
+              <span class="lead-index">${data.length - index}</span>
+              <span class="lead-name">${escapeHTML(lead.name || '未填姓名')}</span>
+              <span class="tag tag-${escapeHTML(lead.status)}">${escapeHTML(statusLabels[lead.status] || lead.status)}</span>
+              ${lead.line_clicked ? '<span class="tag tag-line">已點 LINE</span>' : ''}
             </div>
-          </td>
-        </tr>
+            <div class="lead-meta">
+              <span>手機 <strong>${escapeHTML(lead.phone)}</strong></span>
+              <span>LINE <strong>${escapeHTML(lead.line_id)}</strong></span>
+              <span>金額 <strong>${escapeHTML(lead.q3_amount_needed || '未填')}</strong></span>
+              <span>居住 <strong>${escapeHTML(lead.city || '未填')}</strong></span>
+            </div>
+            <div class="lead-time">${escapeHTML(formatDate(lead.created_at))}</div>
+          </div>
+          <div class="lead-actions">
+            <button class="status-btn ${lead.status === 'contacted' ? 'active' : ''}" onclick="updateLead('${lead.id}',{status:'contacted'})">已聯繫</button>
+            <button class="status-btn ${lead.status === 'line_added' ? 'active' : ''}" onclick="updateLead('${lead.id}',{status:'line_added'})">已添加</button>
+            <button class="status-btn ${lead.status === 'approved' ? 'active' : ''}" onclick="updateLead('${lead.id}',{status:'approved'})">已成交</button>
+            <button class="status-btn ${lead.status === 'invalid' ? 'active' : ''}" onclick="updateLead('${lead.id}',{status:'invalid'})">無效</button>
+            <button onclick="copyLead('${lead.id}')">複製</button>
+            <button class="secondary" onclick="openDetails('${lead.id}')">詳情</button>
+          </div>
+        </article>
       `).join('');
+      renderStats();
       updateSelectionUI(data);
+    }
+
+    function detailItem(label, value) {
+      return `<div class="detail-item"><label>${escapeHTML(label)}</label><div>${escapeHTML(value || '未填')}</div></div>`;
+    }
+
+    function openDetails(id) {
+      const lead = leads.find(item => item.id === id);
+      if (!lead) return;
+      activeDetailId = id;
+      document.getElementById('detail-title').textContent = `${lead.name || '客戶'}｜詳細資料`;
+      document.getElementById('detail-body').innerHTML = `
+        <div class="detail-grid">
+          ${detailItem('提交時間', formatDate(lead.created_at))}
+          ${detailItem('目前狀態', statusLabels[lead.status] || lead.status)}
+          ${detailItem('姓名', lead.name)}
+          ${detailItem('年齡', lead.age ? lead.age + ' 歲' : '')}
+          ${detailItem('手機', lead.phone)}
+          ${detailItem('LINE ID', lead.line_id)}
+          ${detailItem('居住縣市', lead.city)}
+          ${detailItem('身分證字號', lead.id_number)}
+          ${detailItem('需求金額', lead.q3_amount_needed)}
+          ${detailItem('既有貸款', lead.q1_existing_loan)}
+          ${detailItem('帳戶狀態', lead.q2_bank_status)}
+          ${detailItem('外幣帳戶', lead.q4_foreign_currency_account)}
+          ${detailItem('LINE 點擊', lead.line_clicked ? '已點擊加入 LINE' : '尚未點擊')}
+          ${detailItem('來源網址', lead.source_url)}
+        </div>
+        <div class="detail-section">
+          <h3>快速操作</h3>
+          <div class="drawer-actions">
+            ${Object.entries(statusLabels).map(([value, label]) =>
+              `<button class="${lead.status === value ? '' : 'secondary'}" onclick="updateLead('${lead.id}',{status:'${value}'})">${escapeHTML(label)}</button>`
+            ).join('')}
+            <button onclick="copyLeadField('${lead.id}','phone')">複製電話</button>
+            <button onclick="copyLeadField('${lead.id}','line_id')">複製 LINE</button>
+          </div>
+        </div>
+        <div class="detail-section">
+          <h3>處理備註</h3>
+          <textarea id="detail-notes">${escapeHTML(lead.notes || '')}</textarea>
+          <div style="height:10px"></div>
+          <button onclick="saveDetailNotes('${lead.id}')">儲存備註</button>
+        </div>
+      `;
+      document.getElementById('drawer-backdrop').classList.remove('hidden');
+      document.getElementById('detail-drawer').classList.remove('hidden');
+    }
+
+    function closeDetails() {
+      activeDetailId = null;
+      document.getElementById('drawer-backdrop').classList.add('hidden');
+      document.getElementById('detail-drawer').classList.add('hidden');
+    }
+
+    function copyLead(id) {
+      const lead = leads.find(item => item.id === id);
+      if (!lead) return;
+      copyText(`姓名：${lead.name || ''}\n手機：${lead.phone || ''}\nLINE：${lead.line_id || ''}\n金額：${lead.q3_amount_needed || ''}\n居住：${lead.city || ''}`);
     }
 
     function toggleLeadSelection(id, checked) {
@@ -413,9 +521,15 @@
       await loadLeads();
     }
 
-    function saveNotes(id) {
-      const notes = document.getElementById('notes-' + id).value;
+    function saveDetailNotes(id) {
+      const notes = document.getElementById('detail-notes').value;
       updateLead(id, { notes });
+    }
+
+    function copyLeadField(id, field) {
+      const lead = leads.find(item => item.id === id);
+      if (!lead) return;
+      copyText(lead[field] || '');
     }
 
     async function copyText(value) {
