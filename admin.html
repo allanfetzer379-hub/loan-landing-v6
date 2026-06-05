@@ -67,6 +67,8 @@
     .tag-rejected { background:#fff2d7; color:#9b6100; }
     .tag-invalid { background:#fde9e9; color:#b42e2e; }
     .tag-line { background:#f3e4ff; color:#9637b4; }
+    .tag-fresh { background:#dcf8eb; color:#087b42; }
+    .tag-duplicate { background:#f9e1ff; color:#a02cb4; border:1px solid #ecaaf5; }
     .lead-meta { display:flex; align-items:center; gap:20px; white-space:nowrap; overflow:hidden; color:#526178; font-size:13px; }
     .lead-meta span { overflow:hidden; text-overflow:ellipsis; }
     .lead-meta strong { color:#19263a; }
@@ -87,6 +89,7 @@
     .detail-section { border-top:1px solid #e5eaf0; padding-top:18px; margin-top:18px; }
     .detail-section h3 { margin:0 0 12px; font-size:15px; }
     .drawer-actions { display:flex; gap:8px; flex-wrap:wrap; }
+    .client-copy-box { width:100%; min-height:250px; background:#f7f9fc; color:#172236; font-size:14px; line-height:1.75; resize:vertical; }
     .export-note { margin: 10px 0 0; }
     @media (max-width: 1050px) {
       .stats { grid-template-columns: repeat(3,1fr); }
@@ -306,6 +309,33 @@
       await loadLeads();
     }
 
+    function normalizeLeadName(value) {
+      return String(value || '').trim().replace(/\s+/g, '').toLowerCase();
+    }
+
+    function normalizeLeadPhone(value) {
+      let phone = String(value || '').replace(/\D/g, '');
+      if (phone.startsWith('8869')) phone = '0' + phone.slice(3);
+      return phone;
+    }
+
+    function markDuplicateLeads() {
+      const seenNames = new Set();
+      const seenPhones = new Set();
+      [...leads]
+        .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+        .forEach(lead => {
+          const name = normalizeLeadName(lead.name);
+          const phone = normalizeLeadPhone(lead.phone);
+          lead.__isDuplicate = Boolean(
+            (name && seenNames.has(name)) ||
+            (phone && seenPhones.has(phone))
+          );
+          if (name) seenNames.add(name);
+          if (phone) seenPhones.add(phone);
+        });
+    }
+
     async function loadLeads() {
       const refreshBtn = document.getElementById('refresh-btn');
       if (refreshBtn) {
@@ -325,6 +355,7 @@
         return;
       }
       leads = data || [];
+      markDuplicateLeads();
       selectedLeadIds = new Set([...selectedLeadIds].filter(id => leads.some(lead => lead.id === id)));
       renderStats();
       renderLeads();
@@ -393,7 +424,10 @@
             <div class="lead-title-line">
               <span class="lead-index">${data.length - index}</span>
               <span class="lead-name">${escapeHTML(lead.name || '未填姓名')}</span>
-              <span class="tag tag-${escapeHTML(lead.status)}">${escapeHTML(statusLabels[lead.status] || lead.status)}</span>
+              ${lead.__isDuplicate
+                ? '<span class="tag tag-duplicate">重粉</span>'
+                : '<span class="tag tag-fresh">新客戶</span>'}
+              ${lead.status === 'new' ? '' : `<span class="tag tag-${escapeHTML(lead.status)}">${escapeHTML(statusLabels[lead.status] || lead.status)}</span>`}
               ${lead.line_clicked ? '<span class="tag tag-line">已點 LINE</span>' : ''}
             </div>
             <div class="lead-meta">
@@ -409,7 +443,7 @@
             <button class="status-btn ${lead.status === 'line_added' ? 'active' : ''}" onclick="updateLead('${lead.id}',{status:'line_added'})">已添加</button>
             <button class="status-btn ${lead.status === 'approved' ? 'active' : ''}" onclick="updateLead('${lead.id}',{status:'approved'})">已成交</button>
             <button class="status-btn ${lead.status === 'invalid' ? 'active' : ''}" onclick="updateLead('${lead.id}',{status:'invalid'})">無效</button>
-            <button onclick="copyLead('${lead.id}')">複製</button>
+            <button onclick="copyLead('${lead.id}')">一鍵複製</button>
             <button class="secondary" onclick="openDetails('${lead.id}')">詳情</button>
           </div>
         </article>
@@ -431,6 +465,7 @@
         <div class="detail-grid">
           ${detailItem('提交時間', formatDate(lead.created_at))}
           ${detailItem('目前狀態', statusLabels[lead.status] || lead.status)}
+          ${detailItem('客戶類型', lead.__isDuplicate ? '重粉' : '新客戶')}
           ${detailItem('姓名', lead.name)}
           ${detailItem('年齡', lead.age ? lead.age + ' 歲' : '')}
           ${detailItem('手機', lead.phone)}
@@ -443,6 +478,12 @@
           ${detailItem('外幣帳戶', lead.q4_foreign_currency_account)}
           ${detailItem('LINE 點擊', lead.line_clicked ? '已點擊加入 LINE' : '尚未點擊')}
           ${detailItem('來源網址', lead.source_url)}
+        </div>
+        <div class="detail-section">
+          <h3>提供甲方的客戶資料</h3>
+          <textarea id="client-copy-text" class="client-copy-box" readonly>${escapeHTML(clientCopyText(lead))}</textarea>
+          <div style="height:10px"></div>
+          <button id="client-copy-btn" onclick="copyLead('${lead.id}')">一鍵複製客戶資料</button>
         </div>
         <div class="detail-section">
           <h3>快速操作</h3>
@@ -471,10 +512,44 @@
       document.getElementById('detail-drawer').classList.add('hidden');
     }
 
-    function copyLead(id) {
+    function bankWarningValue(value) {
+      return String(value || '').includes('警示') && !String(value || '').includes('非警示') ? '是' : '否';
+    }
+
+    function foreignAccountValue(value) {
+      const text = String(value || '');
+      return text.includes('是') || text.includes('有外幣') ? '是' : '否';
+    }
+
+    function existingLoanValue(value) {
+      const text = String(value || '');
+      return !text || text.includes('無') ? '無' : '有';
+    }
+
+    function clientCopyText(lead) {
+      return [
+        `姓名：${lead.name || ''}`,
+        `年齡：${lead.age || ''}`,
+        `居住地：${lead.city || ''}`,
+        `LINE ID：${lead.line_id || ''}`,
+        `手機號碼：${lead.phone || ''}`,
+        `需求金額：${lead.q3_amount_needed || ''}`,
+        `身分證字號：${lead.id_number || ''}`,
+        `銀行警示戶：${bankWarningValue(lead.q2_bank_status)}`,
+        `個人外幣帳戶：${foreignAccountValue(lead.q4_foreign_currency_account)}`,
+        `信貸/房貸/汽貸/機車：${existingLoanValue(lead.q1_existing_loan)}`
+      ].join('\n');
+    }
+
+    async function copyLead(id) {
       const lead = leads.find(item => item.id === id);
       if (!lead) return;
-      copyText(`姓名：${lead.name || ''}\n手機：${lead.phone || ''}\nLINE：${lead.line_id || ''}\n金額：${lead.q3_amount_needed || ''}\n居住：${lead.city || ''}`);
+      await copyText(clientCopyText(lead));
+      const button = document.getElementById('client-copy-btn');
+      if (button) {
+        button.textContent = '已複製，可以直接貼給甲方';
+        setTimeout(() => { button.textContent = '一鍵複製客戶資料'; }, 1800);
+      }
     }
 
     function toggleLeadSelection(id, checked) {
@@ -533,7 +608,19 @@
     }
 
     async function copyText(value) {
-      await navigator.clipboard.writeText(value || '');
+      const text = value || '';
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (error) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        textarea.remove();
+      }
     }
 
     function exportCSV() {
