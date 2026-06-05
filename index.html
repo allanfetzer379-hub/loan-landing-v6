@@ -386,6 +386,47 @@
       display: inline-flex; align-items: center; justify-content: center;
       font-size: 12px; font-weight: 900;
     }
+    .estimate-card {
+      background: #fff;
+      color: #15251a;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      border: 2px solid rgba(255,255,255,.95);
+      box-shadow: 0 8px 20px rgba(0,0,0,.18);
+    }
+    .estimate-card .estimate-label {
+      font-size: 12px;
+      color: #55705e;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .estimate-card .estimate-amount {
+      color: #008f26;
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+    .estimate-card .estimate-note {
+      font-size: 13px;
+      line-height: 1.55;
+      color: #34483a;
+    }
+    .estimate-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .estimate-tags span {
+      background: #e9f9ed;
+      color: #008f26;
+      border-radius: 999px;
+      padding: 5px 9px;
+      font-size: 12px;
+      font-weight: 800;
+    }
     .question-block { margin-bottom: 18px; }
     .question-text {
       font-size: 14px;
@@ -1216,8 +1257,8 @@
       <!-- ===== QUIZ FORM ===== -->
       <div class="quiz-section" id="quiz-section">
         <div class="quiz-header">
-          <h3>🎯 群誠資產・免費線上資格評估</h3>
-          <p>1分鐘快速評估，立即解鎖您的專屬紓困額度 ── 銀行拒絕過的，這裡可能幫你拿到</p>
+          <h3>💰 先試算您需要的周轉金額</h3>
+          <p>先選擇需求金額，系統再依條件做初步分類，讓專員更快協助確認方案。</p>
         </div>
 
         <!-- Progress -->
@@ -1229,44 +1270,11 @@
         <!-- STEP 1 -->
         <div class="quiz-step active" id="step-1">
           <div class="step-title">
-            <span class="step-badge">1</span> 快速條件確認（30秒完成）
+            <span class="step-badge">1</span> 先選擇您想申請的金額
           </div>
 
           <div class="question-block">
-            <p class="question-text">Q1. 您目前是否有其他既有貸款？</p>
-            <div class="options-grid">
-              <button class="option-btn" data-q="q1" data-v="無貸款" onclick="selectOption(this)">
-                <span class="option-icon"></span> 無貸款
-              </button>
-              <button class="option-btn" data-q="q1" data-v="有既有貸款" onclick="selectOption(this)">
-                <span class="option-icon"></span> 有（信貸/房貸/汽貸/機車貸）
-              </button>
-            </div>
-          </div>
-
-          <div class="question-block">
-            <p class="question-text">Q2. 您目前的銀行帳戶狀態是否正常？</p>
-            <div class="options-grid">
-              <button class="option-btn" data-q="q2" data-v="帳戶正常" onclick="selectOption(this)">
-                <span class="option-icon"></span> 是，皆正常
-              </button>
-              <button class="option-btn" data-q="q2" data-v="警示戶" onclick="selectOption(this, true)">
-                <span class="option-icon"></span> 否，屬於銀行警示戶
-              </button>
-            </div>
-          </div>
-
-          <button class="next-btn" onclick="nextStep(1)">下一步 →</button>
-        </div>
-
-        <!-- STEP 2 -->
-        <div class="quiz-step" id="step-2">
-          <div class="step-title">
-            <span class="step-badge">2</span> 需求確認
-          </div>
-
-          <div class="question-block">
-            <p class="question-text">Q3. 您本次預估需要的周轉金額度？</p>
+            <p class="question-text">Q1. 您目前最需要試算的周轉金額是？</p>
             <div class="options-grid">
               <button class="option-btn" data-q="q3" data-v="10萬以下" onclick="selectOption(this)">
                 <span class="option-icon"></span> 10萬以下
@@ -1283,6 +1291,39 @@
             </div>
           </div>
 
+          <button class="next-btn" onclick="nextStep(1)">查看初步條件 →</button>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="quiz-step" id="step-2">
+          <div class="step-title">
+            <span class="step-badge">2</span> 快速確認基本條件
+          </div>
+
+          <div class="question-block">
+            <p class="question-text">Q2. 您目前是否有其他既有貸款？</p>
+            <div class="options-grid">
+              <button class="option-btn" data-q="q1" data-v="無貸款" onclick="selectOption(this)">
+                <span class="option-icon"></span> 無貸款
+              </button>
+              <button class="option-btn" data-q="q1" data-v="有既有貸款" onclick="selectOption(this)">
+                <span class="option-icon"></span> 有（信貸/房貸/汽貸/機車貸）
+              </button>
+            </div>
+          </div>
+
+          <div class="question-block">
+            <p class="question-text">Q3. 您目前的銀行帳戶狀態是否正常？</p>
+            <div class="options-grid">
+              <button class="option-btn" data-q="q2" data-v="帳戶正常" onclick="selectOption(this)">
+                <span class="option-icon"></span> 是，皆正常
+              </button>
+              <button class="option-btn" data-q="q2" data-v="警示戶" onclick="selectOption(this, true)">
+                <span class="option-icon"></span> 否，屬於銀行警示戶
+              </button>
+            </div>
+          </div>
+
           <div class="question-block">
             <p class="question-text">Q4. 您是否持有個人外幣帳戶？</p>
             <div class="options-grid">
@@ -1295,16 +1336,28 @@
             </div>
           </div>
 
-          <button class="next-btn" onclick="nextStep(2)">下一步 →</button>
+          <button class="next-btn" onclick="nextStep(2)">查看試算結果 →</button>
         </div>
 
         <!-- STEP 3 -->
         <div class="quiz-step" id="step-3">
           <div class="step-title">
-            <span class="step-badge">3</span> 資格鎖定
+            <span class="step-badge">3</span> 初步試算結果
+          </div>
+          <div class="estimate-card">
+            <div class="estimate-label">您選擇的需求金額</div>
+            <div class="estimate-amount" id="estimate-amount">待確認</div>
+            <div class="estimate-note">
+              系統已完成初步分類。實際可媒合方案、額度與條件，需由群誠資產專員依您的資料進一步確認。
+            </div>
+            <div class="estimate-tags">
+              <span>LINE 專員聯繫</span>
+              <span>免費初步評估</span>
+              <span>資料加密送出</span>
+            </div>
           </div>
           <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:13px;line-height:1.6;">
-            🎉 <strong>【群誠資產・資格鎖定】</strong>恭喜！根據初步大數據評估，您的條件已進入「當天急件撥款」高機率過件名單。請填寫以下真實資訊，群誠資產專員將第一時間為您爭取最高額度（資訊受《個資法》嚴格保護，僅供初審使用，絕不外流）。
+            🎉 <strong>【群誠資產・試算完成】</strong>請填寫以下真實資訊以完成名額登記。送出後，群誠專員將優先透過 LINE 與您確認可評估方案與後續資料。
           </div>
 
           <form id="apply-form" onsubmit="submitForm(event)">
@@ -1346,7 +1399,7 @@
                 <span class="id-hint">重要：專員將優先透過 LINE 確認核貸額度</span>
               </div>
             </div>
-            <button type="submit" class="cta-btn">👉 送出給群誠資產，搶占今日最後名額</button>
+            <button type="submit" class="cta-btn">👉 提交資料，讓專員確認可評估額度</button>
           </form>
           <div class="ssl-badge">🔒 群誠資產嚴格遵守《個人資料保護法》，256-bit SSL 加密傳輸，絕不洩漏個資，不影響聯徵紀錄。</div>
         </div>
@@ -1579,11 +1632,16 @@ setInterval(function() {
 var answers = {};
 var currentStep = 1;
 var totalSteps = 3;
+var progressLabels = {
+  1: '第 1 步：選擇需求金額',
+  2: '第 2 步：確認基本條件',
+  3: '第 3 步：查看初步結果'
+};
 
 function updateProgress(step) {
   var pct = Math.round((step / totalSteps) * 100);
   document.getElementById('progress-bar').style.width = pct + '%';
-  document.getElementById('progress-label').textContent = '第 ' + step + ' 步，共 ' + totalSteps + ' 步';
+  document.getElementById('progress-label').textContent = progressLabels[step] || ('第 ' + step + ' 步，共 ' + totalSteps + ' 步');
 }
 updateProgress(1);
 
@@ -1605,7 +1663,7 @@ function selectOption(btn, isDisqualify) {
 }
 
 function nextStep(from) {
-  var requiredQ = from === 1 ? ['q1','q2'] : ['q3','q4'];
+  var requiredQ = from === 1 ? ['q3'] : ['q1','q2','q4'];
   for (var i = 0; i < requiredQ.length; i++) {
     if (!answers[requiredQ[i]]) {
       showModal('⚠️ 提示', '請先完成所有選項再繼續。');
@@ -1627,7 +1685,14 @@ function nextStep(from) {
   document.getElementById('step-' + next).classList.add('active');
   currentStep = next;
   updateProgress(next);
+  if (next === 3) updateEstimateCard();
   document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function updateEstimateCard() {
+  var amount = answers['q3'] || '待確認';
+  var amountEl = document.getElementById('estimate-amount');
+  if (amountEl) amountEl.textContent = amount;
 }
 
 // ============================================================
