@@ -369,24 +369,27 @@
 
     function renderStats() {
       const today = new Date();
-      document.getElementById('stat-filtered').textContent = filteredLeads().length;
-      document.getElementById('stat-today').textContent = leads.filter(x => isSameDay(x.created_at, today)).length;
-      document.getElementById('stat-new').textContent = leads.filter(x => x.status === 'new').length;
-      document.getElementById('stat-contacted').textContent = leads.filter(x => x.status === 'contacted').length;
-      document.getElementById('stat-line-added').textContent = leads.filter(x => x.status === 'line_added').length;
-      document.getElementById('stat-approved').textContent = leads.filter(x => x.status === 'approved').length;
-      document.getElementById('stat-invalid').textContent = leads.filter(x => x.status === 'invalid').length;
+      const createdData = filteredLeads('created_at');
+      const statusData = filteredLeads('updated_at');
+      document.getElementById('stat-filtered').textContent = createdData.length;
+      document.getElementById('stat-today').textContent = createdData.filter(x => isSameDay(x.created_at, today)).length;
+      document.getElementById('stat-new').textContent = createdData.filter(x => x.status === 'new').length;
+      document.getElementById('stat-contacted').textContent = statusData.filter(x => x.status === 'contacted').length;
+      document.getElementById('stat-line-added').textContent = statusData.filter(x => x.status === 'line_added').length;
+      document.getElementById('stat-approved').textContent = statusData.filter(x => x.status === 'approved').length;
+      document.getElementById('stat-invalid').textContent = statusData.filter(x => x.status === 'invalid').length;
     }
 
-    function filteredLeads() {
+    function filteredLeads(dateField = 'created_at') {
       const q = document.getElementById('search').value.trim().toLowerCase();
       const status = document.getElementById('status-filter').value;
       const from = document.getElementById('date-from').value;
       const to = document.getElementById('date-to').value;
       return leads.filter(lead => {
         if (status && lead.status !== status) return false;
-        if (from && new Date(lead.created_at) < new Date(from + 'T00:00:00')) return false;
-        if (to && new Date(lead.created_at) > new Date(to + 'T23:59:59')) return false;
+        const dateValue = lead[dateField] || lead.created_at;
+        if (from && new Date(dateValue) < new Date(from + 'T00:00:00')) return false;
+        if (to && new Date(dateValue) > new Date(to + 'T23:59:59')) return false;
         if (!q) return true;
         return [lead.name, lead.phone, lead.line_id, lead.city, lead.id_number]
           .some(value => String(value || '').toLowerCase().includes(q));
@@ -590,7 +593,10 @@
     }
 
     async function updateLead(id, patch) {
-      const { error } = await client.from('leads').update(patch).eq('id', id);
+      const update = patch.status
+        ? { ...patch, updated_at: new Date().toISOString() }
+        : patch;
+      const { error } = await client.from('leads').update(update).eq('id', id);
       if (error) {
         alert('更新失敗：' + error.message);
         return;
