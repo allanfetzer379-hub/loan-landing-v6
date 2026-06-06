@@ -30,7 +30,7 @@
     .hidden { display: none !important; }
     .notice { color: #7c899d; font-size: 13px; line-height: 1.6; }
     .error { color: #b42318; }
-    .stats { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; margin-bottom: 24px; }
+    .stats { display: grid; grid-template-columns: repeat(7, 1fr); gap: 14px; margin-bottom: 24px; }
     .stat { --accent:#4f6cff; position: relative; background: #fff; border: 1px solid #dce2ea; border-radius: 8px; padding: 20px 18px 18px 24px; min-height: 116px; overflow: hidden; }
     .stat::before { content:""; position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--accent); }
     .stat b { display: block; font-size: 34px; line-height: 1; color: #101a2d; margin-bottom: 10px; }
@@ -149,6 +149,7 @@
         <div class="stat" style="--accent:#dd8700"><b id="stat-new">0</b><span>新客戶</span></div>
         <div class="stat" style="--accent:#8a55ed"><b id="stat-contacted">0</b><span>已聯繫</span></div>
         <div class="stat" style="--accent:#08a56a"><b id="stat-line-added">0</b><span>已添加 LINE</span></div>
+        <div class="stat" style="--accent:#6741c7"><b id="stat-approved">0</b><span>已成交</span></div>
         <div class="stat" style="--accent:#dc3030"><b id="stat-invalid">0</b><span>無效</span></div>
       </div>
 
@@ -373,6 +374,7 @@
       document.getElementById('stat-new').textContent = leads.filter(x => x.status === 'new').length;
       document.getElementById('stat-contacted').textContent = leads.filter(x => x.status === 'contacted').length;
       document.getElementById('stat-line-added').textContent = leads.filter(x => x.status === 'line_added').length;
+      document.getElementById('stat-approved').textContent = leads.filter(x => x.status === 'approved').length;
       document.getElementById('stat-invalid').textContent = leads.filter(x => x.status === 'invalid').length;
     }
 
