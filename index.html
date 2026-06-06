@@ -13,16 +13,19 @@
     n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
     t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
     document,'script','https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '975921495153095');
-    fbq('init', '1033980915864419');
-    fbq('track', 'PageView');
+    window.FALLBACK_PIXEL_IDS = ['975921495153095', '1033980915864419'];
+    window.__fbPixelsInitialized = false;
+    window.initializeFbPixels = function(pixelIds) {
+      if (window.__fbPixelsInitialized || typeof fbq === 'undefined') return;
+      var sourceIds = Array.isArray(pixelIds) ? pixelIds : window.FALLBACK_PIXEL_IDS;
+      var validIds = sourceIds.map(String).filter(function(id, index, list) {
+        return /^\d{8,20}$/.test(id) && list.indexOf(id) === index;
+      });
+      validIds.forEach(function(id) { fbq('init', id); });
+      if (validIds.length) fbq('track', 'PageView');
+      window.__fbPixelsInitialized = true;
+    };
   </script>
-  <noscript>
-  <img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=975921495153095&ev=PageView&noscript=1"/>
-  <img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1033980915864419&ev=PageView&noscript=1"/>
-</noscript>
   <!-- ===== END FB PIXEL ===== -->
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1609,6 +1612,43 @@ var ENTERPRISE_LINE_URL = 'https://line.me/R/ti/p/' + ENTERPRISE_LINE_ID;
 // ============================================================
 var SUPABASE_URL = 'https://syddbzqkhotpyyoqykof.supabase.co';
 var SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_STtS281jKjrPZ_zfOiWvdA_pdB7kg1Q';
+
+async function loadSiteConfig() {
+  var enabledPixelIds = window.FALLBACK_PIXEL_IDS.slice();
+  try {
+    var response = await fetch(
+      SUPABASE_URL + '/rest/v1/site_settings?id=eq.1&select=line_url,line_id,pixel_ids',
+      {
+        headers: {
+          'apikey': SUPABASE_PUBLISHABLE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_PUBLISHABLE_KEY
+        }
+      }
+    );
+    if (!response.ok) throw new Error('Settings request failed');
+    var rows = await response.json();
+    var settings = rows && rows[0];
+    if (settings) {
+      if (settings.line_url && settings.line_id) {
+        ENTERPRISE_LINE_URL = settings.line_url;
+        ENTERPRISE_LINE_ID = settings.line_id;
+        var lineButton = document.getElementById('line-add-btn');
+        var lineIdText = document.getElementById('line-official-id');
+        if (lineButton) lineButton.href = ENTERPRISE_LINE_URL;
+        if (lineIdText) lineIdText.textContent = ENTERPRISE_LINE_ID;
+      }
+      if (Array.isArray(settings.pixel_ids)) {
+        enabledPixelIds = settings.pixel_ids
+          .filter(function(pixel) { return pixel && pixel.enabled !== false; })
+          .map(function(pixel) { return String(pixel.id || ''); });
+      }
+    }
+  } catch (error) {
+    console.warn('Site settings fallback used:', error);
+  }
+  window.initializeFbPixels(enabledPixelIds);
+}
+loadSiteConfig();
 
 // ============================================================
 // DYNAMIC DATE
