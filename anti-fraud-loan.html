@@ -1,0 +1,2338 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>【全民防詐安全專題】銀行不借、簡訊又怕騙？缺10萬到100萬先看可評估額度</title>
+  <meta name="description" content="借錢怕踩雷、銀行又不借？鴻賜資產管理有限公司提供線上安全額度評估，缺10萬到100萬先看可評估方向，表單送出後由LINE專員協助確認。" />
+
+  <!-- ===== FB PIXEL ===== -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    window.FALLBACK_PIXEL_IDS = ['975921495153095', '1033980915864419'];
+    window.__fbPixelsInitialized = false;
+    window.initializeFbPixels = function(pixelIds) {
+      if (window.__fbPixelsInitialized || typeof fbq === 'undefined') return;
+      var sourceIds = Array.isArray(pixelIds) ? pixelIds : window.FALLBACK_PIXEL_IDS;
+      var validIds = sourceIds.map(String).filter(function(id, index, list) {
+        return /^\d{8,20}$/.test(id) && list.indexOf(id) === index;
+      });
+      validIds.forEach(function(id) { fbq('init', id); });
+      if (validIds.length) fbq('track', 'PageView');
+      window.__fbPixelsInitialized = true;
+    };
+  </script>
+  <!-- ===== END FB PIXEL ===== -->
+
+  <!-- ===== TIKTOK PIXEL ===== -->
+  <script>
+    window.__tiktokPixelsInitialized = false;
+    window.initializeTikTokPixels = function(pixelIds) {
+      if (window.__tiktokPixelsInitialized) return;
+      var validIds = (Array.isArray(pixelIds) ? pixelIds : []).map(String).filter(function(id, index, list) {
+        return /^[A-Z0-9]{10,30}$/i.test(id) && list.indexOf(id) === index;
+      });
+      if (!validIds.length) {
+        window.__tiktokPixelsInitialized = true;
+        return;
+      }
+      !function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=i+"?sdkid="+e+"&lib="+t;var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(a,s)}}(window,document,"ttq");
+      validIds.forEach(function(id) { window.ttq.load(id); });
+      window.ttq.page();
+      window.__tiktokPixelsInitialized = true;
+    };
+  </script>
+  <!-- ===== END TIKTOK PIXEL ===== -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", Arial, sans-serif;
+      font-size: 15px;
+      color: #1a1a1a;
+      background: #f4f4f4;
+      line-height: 1.7;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ===== TOP TICKER ===== */
+    .ticker-wrap {
+      background: #00b900;
+      color: #fff;
+      font-size: 12px;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 5px 0;
+    }
+    .ticker-inner {
+      display: inline-block;
+      animation: ticker 28s linear infinite;
+      padding-left: 100%;
+    }
+    .ticker-inner span { margin-right: 60px; }
+    @keyframes ticker {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* ===== SITE HEADER (sticky wrapper) ===== */
+    #site-header {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      background: #fff;
+      border-bottom: 3px solid #00b900;
+      box-shadow: 0 2px 6px rgba(0,0,0,.12);
+    }
+    .navbar-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      height: 52px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 20px;
+      font-weight: 900;
+      color: #00b900;
+      letter-spacing: -0.5px;
+    }
+    .logo-icon {
+      width: 32px; height: 32px;
+      background: #00b900;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 18px; font-weight: 900;
+    }
+    .nav-links {
+      display: flex;
+      gap: 0;
+      list-style: none;
+    }
+    .nav-links li a {
+      display: block;
+      padding: 16px 14px;
+      font-size: 13px;
+      color: #444;
+      font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links li a:hover, .nav-links li.active a {
+      color: #00b900;
+      border-bottom: 2px solid #00b900;
+    }
+    .nav-right { font-size: 12px; color: #888; }
+    /* ===== 手機端頂部適配 ===== */
+    @media (max-width: 768px) {
+      /* 跑馬燈壓縮 */
+      .ticker-wrap {
+        font-size: 11px !important;
+        padding: 3px 0 !important;
+        line-height: 1.4 !important;
+      }
+      .ticker-inner span { margin-right: 40px !important; }
+
+      /* 導航欄：隱藏選單與搜尋，只留 LOGO */
+      .nav-links { display: none !important; }
+      .nav-right { display: none !important; }
+      .breadcrumb { display: none !important; }
+
+      /* 導航欄本體：去除多餘空間 */
+      .navbar {
+        border-bottom: 2px solid #00b900 !important;
+        box-shadow: 0 1px 4px rgba(0,0,0,.1) !important;
+      }
+      .navbar-inner {
+        height: 40px !important;
+        min-height: 0 !important;
+        padding: 0 10px !important;
+        justify-content: flex-start !important;
+        gap: 0 !important;
+      }
+      .logo {
+        font-size: 14px !important;
+        gap: 6px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        max-width: calc(100vw - 20px) !important;
+        flex-shrink: 1 !important;
+        line-height: 1 !important;
+      }
+      .logo-icon {
+        width: 26px !important;
+        height: 26px !important;
+        font-size: 13px !important;
+        flex-shrink: 0 !important;
+        border-radius: 6px !important;
+      }
+    }
+
+    /* ===== LAYOUT ===== */
+    .page-wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 20px;
+    }
+    @media (max-width: 768px) {
+      .page-wrap { grid-template-columns: 1fr; padding: 10px; }
+      .sidebar { display: none; }
+    }
+
+    /* ===== BREADCRUMB ===== */
+    .breadcrumb {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 12px;
+    }
+    .breadcrumb span { margin: 0 4px; }
+    .breadcrumb a { color: #00b900; }
+
+    /* ===== HERO / ARTICLE ===== */
+    .article-card {
+      background: #fff;
+      border-radius: 4px;
+      padding: 20px 20px 32px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+    }
+    @media (max-width: 480px) {
+      .article-card { padding: 14px 14px 24px; }
+    }
+    .category-tag {
+      display: inline-block;
+      background: #00b900;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+    .article-title {
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1.4;
+      color: #111;
+      margin-bottom: 10px;
+    }
+    @media (max-width: 480px) {
+      .article-title { font-size: 18px; }
+    }
+    .article-subtitle {
+      font-size: 15px;
+      color: #444;
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      color: #999;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      padding: 8px 0;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .article-meta .dot { color: #ddd; }
+    @media (max-width: 480px) {
+      .article-meta { gap: 6px; font-size: 11px; }
+      .article-meta .dot { display: none; }
+    }
+
+    /* ===== ARTICLE BODY ===== */
+    .article-body p {
+      font-size: 15px;
+      line-height: 1.85;
+      color: #222;
+      margin-bottom: 18px;
+    }
+    .article-body h2 {
+      font-size: 17px;
+      font-weight: 800;
+      color: #111;
+      margin: 24px 0 10px;
+      padding-left: 10px;
+      border-left: 4px solid #00b900;
+    }
+    .article-body .highlight-box {
+      background: #f0fff0;
+      border: 1px solid #b2e0b2;
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin: 18px 0;
+      font-size: 14px;
+      color: #1a5c1a;
+    }
+    .article-img {
+      width: 100%;
+      border-radius: 6px;
+      margin: 18px 0;
+      object-fit: cover;
+      max-height: 320px;
+    }
+    .img-caption {
+      font-size: 11px;
+      color: #aaa;
+      text-align: center;
+      margin-top: -12px;
+      margin-bottom: 18px;
+    }
+
+    /* ===== E VERSION: SAFETY FEATURE LAYOUT ===== */
+    .e-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.18fr) minmax(220px, .82fr);
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+    .e-hero-copy {
+      min-width: 0;
+    }
+    .e-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #eafbea;
+      color: #087b28;
+      border: 1px solid #a8e4b2;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+    .e-hero .article-title {
+      font-size: 25px;
+      margin-bottom: 10px;
+    }
+    .e-punchline {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 14px 0;
+    }
+    .e-punch-card {
+      background: #0bbf36;
+      color: #fff;
+      border-radius: 8px;
+      padding: 10px 8px;
+      text-align: center;
+      box-shadow: 0 8px 18px rgba(0, 120, 0, .18);
+    }
+    .e-punch-card strong {
+      display: block;
+      font-size: 17px;
+      line-height: 1.2;
+    }
+    .e-punch-card span {
+      display: block;
+      font-size: 11px;
+      opacity: .92;
+      margin-top: 4px;
+    }
+    .e-hero-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .e-primary-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #00b900;
+      color: #fff;
+      border-radius: 6px;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 900;
+      box-shadow: 0 8px 18px rgba(0, 120, 0, .22);
+    }
+    .e-safe-note {
+      color: #5a6a5d;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .e-hero-media {
+      border-radius: 10px;
+      overflow: hidden;
+      background: #0e8f24;
+      min-height: 280px;
+      position: relative;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.24);
+    }
+    .e-hero-media img {
+      width: 100%;
+      height: 100%;
+      min-height: 280px;
+      object-fit: cover;
+      opacity: .82;
+    }
+    .e-media-badge {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      background: rgba(255,255,255,.95);
+      color: #0b6f1d;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-weight: 900;
+      font-size: 13px;
+      line-height: 1.45;
+      box-shadow: 0 8px 22px rgba(0,0,0,.2);
+    }
+    .e-alert-strip {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
+      align-items: center;
+      background: #fff9e6;
+      border: 1px solid #f4d678;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin: 16px 0 20px;
+      color: #654800;
+      font-size: 13px;
+    }
+    .e-alert-strip strong { color: #0b7d23; }
+    .e-alert-label {
+      background: #00b900;
+      color: #fff;
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .e-section-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(190px, .68fr);
+      gap: 16px;
+      align-items: center;
+      margin: 22px 0;
+    }
+    .e-feature-photo {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 10px 24px rgba(0,0,0,.12);
+    }
+    .e-feature-photo img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+    .e-amount-wall {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 18px 0 22px;
+    }
+    .e-amount-card {
+      border: 1px solid #d8efd9;
+      border-left: 5px solid #00b900;
+      background: #fbfffb;
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .e-amount-card b {
+      display: block;
+      color: #087b28;
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+    .e-amount-card span {
+      display: block;
+      color: #424242;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .e-pullquote {
+      background: #0a8e28;
+      color: #fff;
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 22px 0;
+      font-size: 17px;
+      font-weight: 900;
+      line-height: 1.55;
+      box-shadow: 0 10px 24px rgba(0, 120, 0, .22);
+    }
+    .e-process {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 18px 0 22px;
+    }
+    .e-process-card {
+      background: #f6fff6;
+      border: 1px solid #cceccd;
+      border-radius: 8px;
+      padding: 12px;
+      min-height: 112px;
+    }
+    .e-process-card b {
+      display: block;
+      color: #008f20;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+    .e-process-card span {
+      color: #333;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .e-form-lead {
+      background: #071b0d;
+      color: #fff;
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 28px 0 -10px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 10px 24px rgba(0,0,0,.18);
+    }
+    .e-form-lead strong {
+      display: block;
+      color: #7dff91;
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+    .e-form-lead span {
+      font-size: 13px;
+      line-height: 1.65;
+      color: rgba(255,255,255,.88);
+    }
+    @media (max-width: 768px) {
+      .e-hero,
+      .e-section-grid {
+        grid-template-columns: 1fr;
+      }
+      .e-hero .article-title { font-size: 21px; }
+      .e-punchline,
+      .e-process {
+        grid-template-columns: 1fr;
+      }
+      .e-alert-strip {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 480px) {
+      .e-amount-wall { grid-template-columns: 1fr; }
+      .e-primary-link { width: 100%; }
+      .e-hero-media,
+      .e-hero-media img { min-height: 220px; }
+    }
+
+    /* ===== COMPARISON TABLE ===== */
+    .compare-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #111;
+      margin: 24px 0 10px;
+      text-align: center;
+    }
+    .compare-table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 20px;
+    }
+    .compare-table {
+      width: 100%;
+      min-width: 480px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .compare-table th {
+      padding: 10px 12px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .compare-table th:first-child { background: #f5f5f5; color: #555; }
+    .compare-table th:nth-child(2) { background: #e8e8e8; color: #c00; }
+    .compare-table th:nth-child(3) { background: #00b900; color: #fff; }
+    .compare-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #eee;
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .compare-table td:first-child { background: #fafafa; font-weight: 700; color: #555; text-align: center; }
+    .compare-table td:nth-child(2) { color: #c00; text-align: center; }
+    .compare-table td:nth-child(3) { color: #007a00; font-weight: 600; text-align: center; }
+    .compare-table tr:hover td { background: #f9fff9; }
+
+    /* ===== QUIZ FORM SECTION ===== */
+    .quiz-section {
+      background: linear-gradient(135deg, #00b900 0%, #009900 100%);
+      border-radius: 10px;
+      padding: 24px 20px;
+      margin: 28px 0;
+      color: #fff;
+      border: 3px solid #fff;
+      box-shadow: 0 10px 28px rgba(0, 120, 0, .28);
+    }
+    @media (max-width: 480px) {
+      .quiz-section { padding: 18px 14px; border-radius: 8px; }
+    }
+    .quiz-section .quiz-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .quiz-section .quiz-header h3 {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+    @media (max-width: 480px) {
+      .quiz-section .quiz-header h3 { font-size: 17px; }
+    }
+    .quiz-section .quiz-header p {
+      font-size: 13px;
+      opacity: .9;
+    }
+    .quiz-attention {
+      background: #fff;
+      color: #087b28;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 900;
+      box-shadow: 0 5px 14px rgba(0,0,0,.18);
+    }
+    .quiz-attention small {
+      display: block;
+      color: #42634b;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    /* Progress Bar */
+    .progress-wrap {
+      background: rgba(255,255,255,.25);
+      border-radius: 20px;
+      height: 8px;
+      margin-bottom: 6px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: #fff;
+      border-radius: 20px;
+      transition: width .4s ease;
+      width: 33%;
+    }
+    .progress-label {
+      text-align: right;
+      font-size: 11px;
+      opacity: .85;
+      margin-bottom: 16px;
+    }
+
+    /* Steps */
+    .quiz-step { display: none; }
+    .quiz-step.active { display: block; }
+    .step-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      opacity: .95;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .step-badge {
+      background: rgba(255,255,255,.3);
+      border-radius: 50%;
+      width: 22px; height: 22px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 900;
+    }
+    .estimate-card {
+      background: #fff;
+      color: #15251a;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      border: 2px solid rgba(255,255,255,.95);
+      box-shadow: 0 8px 20px rgba(0,0,0,.18);
+    }
+    .estimate-card .estimate-label {
+      font-size: 12px;
+      color: #55705e;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .estimate-card .estimate-amount {
+      color: #008f26;
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+    .estimate-card .estimate-note {
+      font-size: 13px;
+      line-height: 1.55;
+      color: #34483a;
+    }
+    .estimate-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .estimate-tags span {
+      background: #e9f9ed;
+      color: #008f26;
+      border-radius: 999px;
+      padding: 5px 9px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .question-block { margin-bottom: 18px; }
+    .question-text {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    @media (max-width: 400px) {
+      .options-grid { grid-template-columns: 1fr; }
+    }
+    .option-btn {
+      background: rgba(255,255,255,.22);
+      border: 2px solid rgba(255,255,255,.7);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 800;
+      padding: 13px 12px;
+      cursor: pointer;
+      transition: all .2s;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .option-btn:hover, .option-btn.selected {
+      background: rgba(255,255,255,.35);
+      border-color: #fff;
+    }
+    .option-icon {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,.7);
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .option-btn.selected .option-icon {
+      background: #fff;
+      border-color: #fff;
+    }
+    .option-btn.selected .option-icon::after {
+      content: '';
+      width: 8px; height: 8px;
+      background: #00b900;
+      border-radius: 50%;
+      display: block;
+    }
+
+    /* Step 3 - Form Fields */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 520px) { .form-grid { grid-template-columns: 1fr; } }
+    .form-group { display: flex; flex-direction: column; gap: 4px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label {
+      font-size: 12px;
+      font-weight: 700;
+      opacity: .9;
+    }
+    .form-group input, .form-group select {
+      background: rgba(255,255,255,.15);
+      border: 1.5px solid rgba(255,255,255,.5);
+      border-radius: 6px;
+      color: #fff;
+      font-size: 14px;
+      padding: 10px 12px;
+      outline: none;
+      transition: border .2s;
+      width: 100%;
+      font-family: inherit;
+      -webkit-appearance: none;
+    }
+    .form-group input::placeholder { color: rgba(255,255,255,.6); }
+    .form-group input:focus, .form-group select:focus {
+      border-color: #fff;
+      background: rgba(255,255,255,.25);
+    }
+    .form-group select { appearance: none; cursor: pointer; }
+    .form-group select option { background: #007a00; color: #fff; }
+    .id-hint {
+      font-size: 11px;
+      opacity: .75;
+      margin-top: 2px;
+    }
+
+    /* CTA Button */
+    .cta-btn {
+      width: 100%;
+      background: #fff;
+      color: #00b900;
+      font-size: 16px;
+      font-weight: 900;
+      padding: 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: all .2s;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.2);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .cta-btn:hover { background: #f0fff0; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+    .cta-btn:active { transform: scale(.98); }
+    .next-btn {
+      background: #fff;
+      border: 2px solid #fff;
+      color: #008b25;
+      font-size: 16px;
+      font-weight: 900;
+      padding: 14px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 14px;
+      transition: all .2s;
+      display: block;
+      width: 100%;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .next-btn:hover { background: #efffef; }
+    .ssl-badge {
+      text-align: center;
+      font-size: 11px;
+      opacity: .8;
+      margin-top: 10px;
+    }
+
+    /* ===== SUCCESS + LINE GUIDE ===== */
+    .success-screen {
+      display: none;
+      text-align: center;
+      padding: 8px 0 4px;
+    }
+    .success-screen .check-icon {
+      font-size: 52px;
+      margin-bottom: 10px;
+    }
+    .success-screen h3 {
+      font-size: 22px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    @media (max-width: 480px) {
+      .success-screen h3 { font-size: 17px; }
+    }
+    .success-screen p {
+      font-size: 14px;
+      opacity: .9;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+    .success-next-alert {
+      background: #fff3cd;
+      color: #5c4200;
+      border: 2px solid #ffd75a;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 15px;
+      font-weight: 900;
+      line-height: 1.45;
+      margin: 0 0 14px;
+      box-shadow: 0 4px 14px rgba(0,0,0,.16);
+    }
+    /* LINE 引導區塊 */
+    .line-guide-box {
+      background: #fff;
+      color: #102216;
+      border: 3px solid #00e15a;
+      border-radius: 14px;
+      padding: 18px 16px 16px;
+      margin-top: 10px;
+      box-shadow: 0 10px 26px rgba(0,0,0,.24);
+    }
+    .line-guide-box .line-step-title {
+      font-size: 18px;
+      font-weight: 900;
+      color: #008f26;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .line-guide-subtitle {
+      color: #36443b;
+      font-size: 13px;
+      line-height: 1.45;
+      margin: 0 0 12px;
+    }
+    .line-steps {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 16px;
+    }
+    .line-steps li {
+      font-size: 13px;
+      color: #24352a;
+      padding: 7px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      border-bottom: 1px solid #e8f4ea;
+    }
+    .line-steps li:last-child { border-bottom: none; }
+    .line-step-num {
+      background: #00b900;
+      color: #fff;
+      border-radius: 50%;
+      width: 20px; height: 20px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 900;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .line-add-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #00b900;
+      color: #fff;
+      font-size: 19px;
+      font-weight: 900;
+      padding: 18px 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      border: 2px solid #00a100;
+      width: 100%;
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(0,122,0,.35);
+      transition: all .2s;
+      -webkit-tap-highlight-color: transparent;
+      animation: linePulse 1.7s ease-in-out infinite;
+    }
+    .line-add-btn:hover { background: #00a900; transform: translateY(-2px); }
+    .line-add-btn:active { transform: scale(.98); }
+    .line-add-btn .line-logo {
+      width: 32px; height: 32px;
+      background: #fff;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: #00b900; font-size: 18px; font-weight: 900;
+    }
+    @keyframes linePulse {
+      0%, 100% { box-shadow: 0 8px 20px rgba(0,122,0,.35); transform: translateY(0); }
+      50% { box-shadow: 0 12px 28px rgba(0,185,0,.52); transform: translateY(-1px); }
+    }
+    .line-id-display {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #445047;
+    }
+    .line-id-display strong {
+      background: #e9f9ed;
+      color: #008f26;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    /* ===== COMMENTS SECTION ===== */
+    .comments-section {
+      background: #fff;
+      border-radius: 4px;
+      padding: 20px 20px;
+      margin-top: 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+    }
+    @media (max-width: 480px) {
+      .comments-section { padding: 14px 14px; }
+    }
+    .comments-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #00b900;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .comment-item {
+      display: flex;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .comment-item:last-child { border-bottom: none; }
+    .avatar-placeholder {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      background: #ccc;
+    }
+    img.avatar-placeholder {
+      object-fit: cover;
+      display: block;
+    }
+    @media (max-width: 400px) {
+      .avatar-placeholder { width: 34px; height: 34px; font-size: 15px; }
+    }
+    .comment-body { flex: 1; min-width: 0; }
+    .comment-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 2px;
+    }
+    .comment-name span { color: #888; font-weight: 400; font-size: 12px; margin-left: 6px; }
+    .comment-text {
+      font-size: 13px;
+      color: #444;
+      line-height: 1.65;
+      margin-bottom: 8px;
+      word-break: break-all;
+    }
+    .comment-footer {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 12px;
+      color: #aaa;
+    }
+    .like-btn {
+      display: flex; align-items: center; gap: 4px;
+      cursor: pointer;
+      transition: color .2s;
+      background: none; border: none; font-size: 12px; color: #aaa; font-family: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .like-btn:hover, .like-btn.liked { color: #00b900; }
+    .time-stamp { color: #bbb; }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar-card {
+      background: #fff;
+      border-radius: 4px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+    }
+    .sidebar-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #333;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #00b900;
+    }
+    .hot-list { list-style: none; }
+    .hot-list li {
+      display: flex;
+      gap: 8px;
+      padding: 8px 0;
+      border-bottom: 1px solid #f5f5f5;
+      font-size: 12px;
+      color: #444;
+      line-height: 1.4;
+      cursor: pointer;
+    }
+    .hot-list li:hover { color: #00b900; }
+    .hot-list li:last-child { border-bottom: none; }
+    .hot-num { font-size: 13px; font-weight: 900; color: #00b900; min-width: 18px; }
+    .hot-num.top3 { color: #e53e3e; }
+    .ad-banner {
+      background: linear-gradient(135deg, #00b900, #009900);
+      border-radius: 8px;
+      padding: 20px 16px;
+      text-align: center;
+      color: #fff;
+      cursor: pointer;
+    }
+    .ad-banner h4 { font-size: 15px; font-weight: 900; margin-bottom: 6px; }
+    .ad-banner p { font-size: 11px; opacity: .85; margin-bottom: 12px; }
+    .ad-banner button {
+      background: #fff;
+      color: #00b900;
+      border: none;
+      border-radius: 20px;
+      padding: 7px 18px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #2c2c2c;
+      color: #aaa;
+      font-size: 12px;
+      padding: 28px 16px;
+      margin-top: 32px;
+      text-align: center;
+      line-height: 1.8;
+    }
+    footer .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    footer .footer-links a { color: #ccc; text-decoration: underline; }
+    footer .footer-links a:hover { color: #00b900; }
+    footer .disclaimer {
+      max-width: 720px;
+      margin: 0 auto;
+      color: #888;
+      font-size: 11px;
+      line-height: 1.7;
+    }
+
+    /* ===== FLOATING CTA (mobile) ===== */
+    .float-cta {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #00b900;
+      color: #fff;
+      text-align: center;
+      padding: 17px 16px;
+      font-size: 16px;
+      font-weight: 900;
+      z-index: 1000;
+      cursor: pointer;
+      box-shadow: 0 -3px 12px rgba(0,0,0,.2);
+      -webkit-tap-highlight-color: transparent;
+    }
+    @media (max-width: 768px) {
+      .float-cta { display: block; }
+      body { padding-bottom: 56px; }
+    }
+
+    /* ===== URGENCY BANNER ===== */
+    .urgency-banner {
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-bottom: 18px;
+      font-size: 13px;
+      color: #856404;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .urgency-banner strong { color: #c00; }
+
+    /* ===== COUNTER ===== */
+    .live-counter {
+      background: #f8f8f8;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin: 16px 0;
+      font-size: 13px;
+      color: #555;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-left: 3px solid #00b900;
+    }
+    .live-dot {
+      width: 8px; height: 8px;
+      background: #00b900;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+      flex-shrink: 0;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: .5; transform: scale(1.3); }
+    }
+
+    /* ===== MODAL ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.6);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: 12px;
+      padding: 28px 24px;
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+    }
+    .modal-box h3 { font-size: 18px; font-weight: 900; color: #00b900; margin-bottom: 10px; }
+    .modal-box p { font-size: 14px; color: #444; line-height: 1.6; margin-bottom: 16px; }
+    .modal-box button {
+      background: #00b900;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 28px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    /* ===== MOBILE STABILITY FIXES ===== */
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+    .page-wrap,
+    .article-card,
+    .article-body,
+    .quiz-section,
+    .comments-section,
+    main {
+      min-width: 0;
+    }
+    .article-title,
+    .article-subtitle,
+    .article-body h2,
+    .article-body p,
+    .highlight-box,
+    .live-counter,
+    .urgency-banner,
+    .quiz-section,
+    .comments-section,
+    .comment-text,
+    .line-guide-box {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    .article-img {
+      height: auto;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      .page-wrap {
+        width: 100%;
+        max-width: 100%;
+        padding: 8px;
+        gap: 12px;
+      }
+      .article-card,
+      .comments-section {
+        width: 100%;
+        border-radius: 6px;
+        padding: 14px 12px 22px;
+      }
+      .category-tag {
+        font-size: 10px;
+        margin-bottom: 8px;
+      }
+      .article-title {
+        font-size: 22px;
+        line-height: 1.35;
+        margin-bottom: 10px;
+      }
+      .article-subtitle {
+        font-size: 16px;
+        line-height: 1.65;
+      }
+      .article-meta {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px 10px;
+        align-items: start;
+        font-size: 12px;
+      }
+      .article-meta span {
+        min-width: 0;
+      }
+      .article-meta .dot {
+        display: none;
+      }
+      .urgency-banner,
+      .live-counter {
+        display: block;
+        padding: 10px 12px;
+        line-height: 1.65;
+      }
+      .article-body h2 {
+        font-size: 20px;
+        line-height: 1.5;
+        padding-left: 9px;
+        margin: 22px 0 10px;
+      }
+      .article-body p {
+        font-size: 17px;
+        line-height: 1.85;
+        margin-bottom: 16px;
+      }
+      .article-img {
+        max-height: none;
+        margin: 16px 0;
+      }
+      .compare-table-wrap {
+        margin-left: -4px;
+        margin-right: -4px;
+        padding-bottom: 6px;
+      }
+      .compare-table {
+        min-width: 420px;
+        font-size: 12px;
+      }
+      .quiz-section {
+        margin: 22px 0;
+        padding: 18px 12px;
+      }
+      .quiz-section .quiz-header h3 {
+        font-size: 19px;
+        line-height: 1.35;
+      }
+      .quiz-section .quiz-header p,
+      .question-text,
+      .option-btn,
+      .form-group label,
+      .form-group input,
+      .form-group select {
+        font-size: 14px;
+      }
+      .options-grid,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .option-btn {
+        min-height: 46px;
+        align-items: flex-start;
+        line-height: 1.5;
+      }
+      .next-btn,
+      .submit-btn,
+      .line-add-btn {
+        min-height: 48px;
+        white-space: normal;
+        line-height: 1.35;
+      }
+      .comment-item {
+        gap: 10px;
+      }
+      .comment-footer {
+        flex-wrap: wrap;
+        gap: 8px 12px;
+      }
+      .float-cta {
+        min-height: 62px;
+        padding: 16px 14px calc(16px + env(safe-area-inset-bottom));
+        font-size: 16px;
+        line-height: 1.35;
+      }
+      body {
+        padding-bottom: calc(70px + env(safe-area-inset-bottom));
+      }
+    }
+
+    @media (max-width: 380px) {
+      .article-title {
+        font-size: 20px;
+      }
+      .article-body h2 {
+        font-size: 18px;
+      }
+      .article-body p {
+        font-size: 16px;
+      }
+      .article-meta {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== FB PIXEL EVENTS CONFIG ===== -->
+<!-- PageView: 已在 <head> 觸發 -->
+<!-- ViewContent: 頁面滾動超過 50% 時觸發 -->
+<!-- Lead: 表單送出成功時觸發 -->
+<!-- InitiateCheckout: 點擊「下一步」進入第2步時觸發 -->
+<!-- CompleteRegistration: 表單最終送出時觸發 -->
+
+<!-- STICKY HEADER WRAPPER -->
+<div id="site-header">
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-inner">
+    <span>🛡️【全民防詐安全專題】借錢別亂點簡訊，先用可辨識通道看額度方向</span>
+    <span>💰 缺 10 萬到 100 萬，先做 1 分鐘安全額度自測</span>
+    <span>✅ 有房貸、車貸、信貸也別急著放棄，先確認是否有評估空間</span>
+    <span>📱 鴻賜資產管理有限公司專員優先透過 LINE 協助確認資料</span>
+    <span>⏰ 今日已有 <span id="ticker-count2">1,247</span> 人完成安全額度初評</span>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="logo">
+      <div class="logo-icon">富</div>
+      鴻賜資產管理有限公司・財經TODAY
+    </div>
+    <ul class="nav-links">
+      <li><a href="#">首頁</a></li>
+      <li class="active"><a href="#">財經</a></li>
+      <li><a href="#">觀點</a></li>
+      <li><a href="#">生活</a></li>
+      <li><a href="#">更多</a></li>
+    </ul>
+    <div class="nav-right">🔍 搜尋</div>
+  </div>
+</nav>
+
+</div><!-- /#site-header -->
+
+<!-- MAIN LAYOUT -->
+<div class="page-wrap">
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+      <a href="#">首頁</a> <span>›</span>
+      <a href="#">全民防詐</a> <span>›</span>
+      <a href="#">安全周轉專題</a>
+    </div>
+
+    <!-- ARTICLE CARD -->
+    <article class="article-card">
+      <section class="e-hero">
+        <div class="e-hero-copy">
+          <span class="e-kicker">安全專題｜合法助貸額度評估</span>
+          <h1 class="article-title">【全民防詐安全專題】銀行不借、簡訊又怕騙？缺 10 萬到 100 萬，先用合法助貸通道看可評估額度</h1>
+          <p class="article-subtitle">薪水追不上物價，帳單、車貸、房貸一樣要繳。真正急需周轉的人，最怕一邊被銀行拒絕，一邊又被亂七八糟的借款廣告嚇到。現在透過鴻賜資產管理有限公司線上安全評估，先確認需求金額與基本條件，再看是否有可評估方向。</p>
+          <div class="e-punchline">
+            <div class="e-punch-card"><strong>10萬-100萬</strong><span>先看可評估方向</span></div>
+            <div class="e-punch-card"><strong>60歲以下</strong><span>有需求先做自測</span></div>
+            <div class="e-punch-card"><strong>1分鐘</strong><span>完成初步分類</span></div>
+          </div>
+          <div class="e-hero-actions">
+            <a href="#quiz-section" class="e-primary-link">立即查看我的可評估額度</a>
+            <span class="e-safe-note">資料加密送出，專員透過 LINE 協助確認</span>
+          </div>
+        </div>
+        <div class="e-hero-media">
+          <img src="img_stress.jpg" alt="民眾面對資金壓力與借款選擇" />
+          <div class="e-media-badge">借錢最怕兩件事：銀行不借，亂借又怕踩雷。</div>
+        </div>
+      </section>
+
+      <div class="article-meta">
+        <span>📅 <span id="pub-date"></span></span>
+        <span class="dot">|</span>
+        <span>👁 瀏覽量：<span id="view-count">84,291</span></span>
+        <span class="dot">|</span>
+        <span>💬 留言：<span id="comment-count">412</span></span>
+        <span class="dot">|</span>
+        <span>✍️ 安全財經專題編輯部</span>
+      </div>
+
+      <div class="e-alert-strip">
+        <span class="e-alert-label">防詐安全提醒</span>
+        <span>近期假貸款簡訊與不明借款廣告增加，民眾有周轉需求時，建議先使用可辨識來源的評估通道，避免在壓力下亂填資料。</span>
+        <strong>先評估，再確認</strong>
+      </div>
+
+      <!-- URGENCY BANNER -->
+      <div class="urgency-banner">
+        ⚠️ <strong>【鴻賜資產管理有限公司・安全額度評估】</strong> 今日線上評估名額剩餘：<strong id="quota-count">37</strong> 個，送出後由 LINE 專員協助確認。
+      </div>
+
+      <!-- ARTICLE BODY -->
+      <div class="article-body">
+
+        <h2>銀行不一定願意聽你解釋，但你可以先知道自己還有沒有空間</h2>
+        <p>很多人不是不想正常借，也不是沒有還款能力，而是剛好卡在車貸、房貸、信貸、信用卡帳單和生活支出中間。去銀行問，對方先看聯徵、薪轉、負債比；近期查詢多一點、名下貸款多一點，就容易被冷處理。</p>
+
+        <div class="e-amount-wall">
+          <div class="e-amount-card"><b>缺 10萬-20萬</b><span>不要先亂點簡訊，先看基本條件是否有安全評估方向。</span></div>
+          <div class="e-amount-card"><b>缺 20萬-30萬</b><span>已有信貸或車貸，也可以先把需求金額和帳戶狀態分類。</span></div>
+          <div class="e-amount-card"><b>缺 30萬-50萬</b><span>銀行不想聽你解釋，不代表沒有其他合法助貸媒合空間。</span></div>
+          <div class="e-amount-card"><b>想拉高到 100萬</b><span>先做 1 分鐘額度自測，再由專員確認可評估方案。</span></div>
+        </div>
+
+        <div class="e-section-grid">
+          <div>
+            <h2>為什麼越急越不能亂問？因為真正該先確認的是「條件」</h2>
+            <p>急用錢時，最容易被誇張廣告吸引。但真正有效率的方式，不是到處亂問，而是先把幾個關鍵條件整理清楚：需要多少金額、帳戶是否正常、名下是否已有貸款、是否持有外幣帳戶，以及聯絡資料是否能讓專員快速確認。</p>
+            <p>鴻賜資產管理有限公司的線上評估，就是把這些資訊先做分類。送出後，專員會透過 LINE 協助確認後續資料與可評估方向；實際額度與條件，仍以合作單位審核結果為準。</p>
+          </div>
+          <div class="e-feature-photo">
+            <img src="img_happy.jpg" alt="民眾完成安全額度評估後與專員確認" />
+          </div>
+        </div>
+
+        <div class="e-pullquote">
+          「銀行不借，不代表你只能去碰高利。先把條件丟進安全評估通道，看得到方向，再決定下一步。」
+        </div>
+
+        <!-- COMPARISON TABLE -->
+        <p class="compare-title">📊 亂問借款廣告 vs 安全額度評估 — 差別在於你先掌握主動權</p>
+        <div class="compare-table-wrap">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>比較項目</th>
+                <th>❌ 亂點借款廣告</th>
+                <th>✅ 鴻賜安全額度評估</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>第一步</td>
+                <td>還沒搞清楚條件，就被話術催著送資料</td>
+                <td>先選需求金額，再做基本條件分類</td>
+              </tr>
+              <tr>
+                <td>既有貸款</td>
+                <td>一聽到有車貸、信貸、房貸就被推高成本方案</td>
+                <td>名下已有貸款，也可先確認是否有評估空間</td>
+              </tr>
+              <tr>
+                <td>聯絡方式</td>
+                <td>電話一直打，壓力越來越大</td>
+                <td>送出後由 LINE 專員協助確認，溝通更清楚</td>
+              </tr>
+              <tr>
+                <td>金額方向</td>
+                <td>只聽對方說，自己不知道能不能談</td>
+                <td>10萬到100萬需求，先看條件是否有方向</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="e-process">
+          <div class="e-process-card"><b>1. 先選金額</b><span>10萬-20萬、20萬-30萬、30萬-50萬、50萬以上，先確認需求級距。</span></div>
+          <div class="e-process-card"><b>2. 條件分類</b><span>帳戶狀態、既有貸款、外幣帳戶等資訊，協助專員快速判斷。</span></div>
+          <div class="e-process-card"><b>3. LINE確認</b><span>表單送出後，專員透過 LINE 說明可評估方向與後續資料。</span></div>
+        </div>
+
+        <!-- LIVE COUNTER -->
+        <div class="live-counter">
+          <div class="live-dot"></div>
+          <span>即時數據：今日已有 <strong id="live-num">1,247</strong> 人完成安全額度初評，<strong style="color:#c00">缺 10 萬到 100 萬，先選金額看方向。</strong></span>
+        </div>
+
+        <div class="e-form-lead">
+          <strong>現在先別猜自己能不能過，先選你需要的周轉金額。</strong>
+          <span>系統會依照你的選項完成初步分類，讓專員更快確認可評估方向與後續資料。</span>
+        </div>
+
+      </div>
+
+      <!-- ===== QUIZ FORM ===== -->
+      <div class="quiz-section" id="quiz-section">
+        <div class="quiz-attention">
+          先選金額，立即查看安全可評估方向
+          <small>3 個步驟完成初步分類，約 1 分鐘</small>
+        </div>
+        <div class="quiz-header">
+          <h3>💰 缺多少周轉金？先別亂問，先做安全額度自測</h3>
+          <p>先點選需求金額，再回答基本條件，即可查看初步評估結果。</p>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-wrap" id="progress-wrap">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="progress-label" id="progress-label">第 1 步，共 3 步</div>
+
+        <!-- STEP 1 -->
+        <div class="quiz-step active" id="step-1">
+          <div class="step-title">
+            <span class="step-badge">1</span> 先選擇您想申請的金額
+          </div>
+
+          <div class="question-block">
+            <p class="question-text">Q1. 您目前最需要試算的周轉金額是？</p>
+            <div class="options-grid">
+              <button class="option-btn" data-q="q3" data-v="10萬-20萬" onclick="selectOption(this)">
+                <span class="option-icon"></span> 10萬 – 20萬
+              </button>
+              <button class="option-btn" data-q="q3" data-v="20萬-30萬" onclick="selectOption(this)">
+                <span class="option-icon"></span> 20萬 – 30萬
+              </button>
+              <button class="option-btn" data-q="q3" data-v="30萬-50萬" onclick="selectOption(this)">
+                <span class="option-icon"></span> 30萬 – 50萬
+              </button>
+              <button class="option-btn" data-q="q3" data-v="50萬以上" onclick="selectOption(this)">
+                <span class="option-icon"></span> 50萬以上
+              </button>
+            </div>
+          </div>
+
+          <button class="next-btn" onclick="nextStep(1)">下一步，開始免費試算額度 →</button>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="quiz-step" id="step-2">
+          <div class="step-title">
+            <span class="step-badge">2</span> 快速確認基本條件
+          </div>
+
+          <div class="question-block">
+            <p class="question-text">Q2. 您目前是否有其他既有貸款？</p>
+            <div class="options-grid">
+              <button class="option-btn" data-q="q1" data-v="無貸款" onclick="selectOption(this)">
+                <span class="option-icon"></span> 無貸款
+              </button>
+              <button class="option-btn" data-q="q1" data-v="有既有貸款" onclick="selectOption(this)">
+                <span class="option-icon"></span> 有（信貸/房貸/汽貸/機車貸）
+              </button>
+            </div>
+          </div>
+
+          <div class="question-block">
+            <p class="question-text">Q3. 您目前的銀行帳戶狀態是否正常？</p>
+            <div class="options-grid">
+              <button class="option-btn" data-q="q2" data-v="帳戶正常" onclick="selectOption(this)">
+                <span class="option-icon"></span> 是，皆正常
+              </button>
+              <button class="option-btn" data-q="q2" data-v="警示戶" onclick="selectOption(this, true)">
+                <span class="option-icon"></span> 否，屬於銀行警示戶
+              </button>
+            </div>
+          </div>
+
+          <div class="question-block">
+            <p class="question-text">Q4. 您是否持有個人外幣帳戶？</p>
+            <div class="options-grid">
+              <button class="option-btn" data-q="q4" data-v="有外幣帳戶" onclick="selectOption(this)">
+                <span class="option-icon"></span> 是
+              </button>
+              <button class="option-btn" data-q="q4" data-v="無外幣帳戶" onclick="selectOption(this)">
+                <span class="option-icon"></span> 否
+              </button>
+            </div>
+          </div>
+
+          <button class="next-btn" onclick="nextStep(2)">查看試算結果 →</button>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="quiz-step" id="step-3">
+          <div class="step-title">
+            <span class="step-badge">3</span> 初步試算結果
+          </div>
+          <div class="estimate-card">
+            <div class="estimate-label">您選擇的需求金額</div>
+            <div class="estimate-amount" id="estimate-amount">待確認</div>
+            <div class="estimate-note">
+              系統已完成初步分類。實際可媒合方案、額度與條件，需由鴻賜資產管理有限公司專員依您的資料進一步確認。
+            </div>
+            <div class="estimate-tags">
+              <span>LINE 專員聯繫</span>
+              <span>免費初步評估</span>
+              <span>資料加密送出</span>
+            </div>
+          </div>
+          <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:13px;line-height:1.6;">
+            🎉 <strong>【鴻賜資產管理有限公司・試算完成】</strong>請填寫以下真實資訊以完成名額登記。送出後，鴻賜資產管理有限公司專員將優先透過 LINE 與您確認可評估方案與後續資料。
+          </div>
+
+          <form id="apply-form" onsubmit="submitForm(event)">
+            <div class="form-grid">
+              <div class="form-group">
+                <label>真實姓名 *</label>
+                <input type="text" id="f-name" placeholder="例：張志豪" required autocomplete="name" />
+              </div>
+              <div class="form-group">
+                <label>目前年齡 *</label>
+                <input type="number" id="f-age" placeholder="限 60 歲以下" min="18" max="60" required inputmode="numeric" />
+              </div>
+              <div class="form-group">
+                <label>現居縣市 *</label>
+                <select id="f-city" required>
+                  <option value="">請選擇居住地</option>
+                  <option>台北市</option><option>新北市</option><option>桃園市</option>
+                  <option>台中市</option><option>台南市</option><option>高雄市</option>
+                  <option>基隆市</option><option>新竹市</option><option>新竹縣</option>
+                  <option>苗栗縣</option><option>彰化縣</option><option>南投縣</option>
+                  <option>雲林縣</option><option>嘉義市</option><option>嘉義縣</option>
+                  <option>屏東縣</option><option>宜蘭縣</option><option>花蓮縣</option>
+                  <option>台東縣</option><option>澎湖縣</option><option>金門縣</option>
+                  <option>連江縣</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>身分證字號 *</label>
+                <input type="text" id="f-id" placeholder="例：A123456789" maxlength="10" required autocomplete="off" />
+                <span class="id-hint">🔒 系統將加密比對申貸資格，絕不外洩</span>
+              </div>
+              <div class="form-group">
+                <label>手機號碼 *</label>
+                <input type="tel" id="f-phone" placeholder="例：0954xxxxxx" required inputmode="tel" autocomplete="tel" />
+              </div>
+              <div class="form-group">
+                <label>常用 LINE ID *</label>
+                <input type="text" id="f-line" placeholder="例：@yourlineid" required />
+                <span class="id-hint">重要：專員將優先透過 LINE 確認核貸額度</span>
+              </div>
+            </div>
+            <button type="submit" class="cta-btn">👉 提交資料，讓專員確認可評估額度</button>
+          </form>
+          <div class="ssl-badge">🔒 鴻賜資產管理有限公司嚴格遵守《個人資料保護法》，256-bit SSL 加密傳輸，絕不洩漏個資，不影響聯徵紀錄。</div>
+        </div>
+
+        <!-- SUCCESS + LINE GUIDE -->
+        <div class="success-screen" id="success-screen">
+          <div class="check-icon">✅</div>
+          <h3>申請資料已送出，還差最後一步！</h3>
+          <p>為了讓專員能快速和您確認額度，請立即加入鴻賜資產管理有限公司 LINE。</p>
+          <div class="success-next-alert">
+            請現在點下方綠色按鈕加入 LINE，專員才方便和您一對一溝通。
+          </div>
+
+          <!-- LINE 引導區塊 -->
+          <div class="line-guide-box">
+            <div class="line-step-title">
+              📲 立即加入 LINE，完成後續聯繫
+            </div>
+            <p class="line-guide-subtitle">表單已收到，接下來請到 LINE 傳送「我要申請」，讓專員確認您的資料。</p>
+            <ul class="line-steps">
+              <li>
+                <span class="line-step-num">1</span>
+                <span>點擊下方按鈕，加入「鴻賜資產管理有限公司」企業 LINE 官方帳號</span>
+              </li>
+              <li>
+                <span class="line-step-num">2</span>
+                <span>加入後請傳送「<strong>我要申請</strong>」，讓專員確認您的身份</span>
+              </li>
+              <li>
+                <span class="line-step-num">3</span>
+                <span>專員將透過 LINE 與您說明可評估方案與後續資料</span>
+              </li>
+            </ul>
+            <!-- ⚠️ 請將下方 href 替換為您的企業 LINE 連結，例如 https://line.me/R/ti/p/@xxxxxxxx -->
+            <a href="https://line.me/R/ti/p/@111tfmeq" target="_blank" class="line-add-btn" id="line-add-btn" onclick="trackLineClick()">
+              <span class="line-logo">L</span>
+              立即加入 LINE 與專員溝通
+            </a>
+            <div class="line-id-display">
+              LINE ID：<strong id="line-official-id">@111tfmeq</strong>（請複製搜尋加入）
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </article>
+
+    <!-- COMMENTS -->
+    <section class="comments-section">
+      <div class="comments-title">
+        💬 網友留言 <span style="font-size:12px;color:#aaa;font-weight:400;">（<span id="total-comments">412</span> 則）</span>
+      </div>
+
+      <div class="comment-item">
+        <img src="avatar_zhang.jpg" alt="張*豪" class="avatar-placeholder" style="object-fit:cover;" />
+        <div class="comment-body">
+          <div class="comment-name">張*豪 <span>45歲・宜蘭縣</span></div>
+          <p class="comment-text">「我本來最怕亂填資料，看到是先做安全額度評估才試試。選完金額後專員用 LINE 跟我確認，至少知道自己還有沒有方向，不用一直亂問。」</p>
+          <div class="comment-footer">
+            <button class="like-btn" onclick="toggleLike(this, 142)">👍 <span class="like-num">142</span></button>
+            <span>回覆</span>
+            <span class="time-stamp">2小時前</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="comment-item">
+        <img src="avatar_lin.jpg" alt="林*玲" class="avatar-placeholder" style="object-fit:cover;" />
+        <div class="comment-body">
+          <div class="comment-name">林*玲 <span>38歲・新北市</span></div>
+          <p class="comment-text">「之前收到很多借款簡訊都不敢點，這個頁面先讓我選需求金額，再填基本資料。後面專員說明得很清楚，感覺比自己亂找安全多了。」</p>
+          <div class="comment-footer">
+            <button class="like-btn" onclick="toggleLike(this, 98)">👍 <span class="like-num">98</span></button>
+            <span>回覆</span>
+            <span class="time-stamp">5小時前</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="comment-item">
+        <img src="avatar_chen.jpg" alt="陳*宇" class="avatar-placeholder" style="object-fit:cover;" />
+        <div class="comment-body">
+          <div class="comment-name">陳*宇 <span>45歲・台中市</span></div>
+          <p class="comment-text">「我是接案的，沒有固定薪轉，銀行常常問到一半就沒下文。這邊先做分類，再由 LINE 專員確認資料，至少不用一間一間被打槍。」</p>
+          <div class="comment-footer">
+            <button class="like-btn" onclick="toggleLike(this, 64)">👍 <span class="like-num">64</span></button>
+            <span>回覆</span>
+            <span class="time-stamp">昨天</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="comment-item">
+        <img src="avatar_wang.jpg" alt="王*芬" class="avatar-placeholder" style="object-fit:cover;" />
+        <div class="comment-body">
+          <div class="comment-name">王*芬 <span>52歲・高雄市</span></div>
+          <p class="comment-text">「名下有房貸真的很怕被拒絕，先填線上評估後，專員幫我把條件和需要準備的資料講清楚。對急用錢的人來說，先知道方向很重要。」</p>
+          <div class="comment-footer">
+            <button class="like-btn" onclick="toggleLike(this, 51)">👍 <span class="like-num">51</span></button>
+            <span>回覆</span>
+            <span class="time-stamp">昨天</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-title">🔥 安全周轉熱門資訊</div>
+      <ul class="hot-list">
+        <li><span class="hot-num top3">1</span>銀行不借、簡訊又怕騙？先看安全額度方向</li>
+        <li><span class="hot-num top3">2</span>缺 10 萬到 100 萬，線上評估怎麼開始？</li>
+        <li><span class="hot-num top3">3</span>有車貸房貸，還能不能先評估周轉空間？</li>
+        <li><span class="hot-num">4</span>聯徵被查多次，為什麼別急著再送銀行？</li>
+        <li><span class="hot-num">5</span>60歲以下有收入來源，先做條件分類</li>
+        <li><span class="hot-num">6</span>急用錢最怕亂問，先整理這幾項資料</li>
+        <li><span class="hot-num">7</span>LINE 專員確認資料前，先選需求金額</li>
+      </ul>
+    </div>
+
+    <div class="ad-banner" onclick="document.getElementById('quiz-section').scrollIntoView({behavior:'smooth'})">
+      <h4>🎯 安全額度自測</h4>
+      <p>缺 10 萬到 100 萬，先看目前條件是否有方向。</p>
+      <button>立即看額度 →</button>
+    </div>
+
+    <div class="sidebar-card" style="margin-top:16px;">
+      <div class="sidebar-title">📊 今日申辦統計</div>
+      <div style="font-size:12px;color:#555;line-height:2;">
+        <div>✅ 今日完成初評：<strong style="color:#00b900" id="sidebar-count">1,247</strong> 人</div>
+        <div>⏱ 初步分類時間：<strong>約 1 分鐘</strong></div>
+        <div>💰 熱門需求金額：<strong>30萬-50萬</strong></div>
+        <div>📱 聯繫方式：<strong style="color:#00b900">LINE 專員確認</strong></div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- FLOATING CTA (mobile) -->
+<div class="float-cta" onclick="scrollToForm()">
+  👉 先選金額，查看我的可評估額度
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <h3 id="modal-title">⚠️ 提示</h3>
+    <p id="modal-msg">請先完成所有選項再繼續。</p>
+    <button onclick="document.getElementById('modal-overlay').classList.remove('show')">確定</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="#">隱私政策</a>
+    <a href="#">服務條款</a>
+    <a href="#">聯絡我們</a>
+    <a href="#">免責聲明</a>
+  </div>
+  <div class="disclaimer">
+    © 2026 鴻賜資產管理有限公司・台灣在地安心理財媒合中心。版權所有。<br/>
+    本網站所提供之媒合服務完全免費。實際核貸金額、利率及還款期數，需由合作金融機構依個人信用條件最終審核為準。<br/>
+    鴻賜資產管理有限公司嚴格遵守台灣《個人資料保護法》，未經您的同意，絕不將資料用於其他商業用途。<br/>
+    本頁面內容僅供參考，不構成任何財務建議或貸款承諾。
+  </div>
+</footer>
+
+<script>
+// ============================================================
+// CONFIG — 企業 LINE ID（準備好後替換此處）
+// ============================================================
+var ENTERPRISE_LINE_ID = '@111tfmeq';
+var ENTERPRISE_LINE_URL = 'https://line.me/R/ti/p/' + ENTERPRISE_LINE_ID;
+
+// ============================================================
+// CONFIG — Supabase Leads Backend
+// ============================================================
+var SUPABASE_URL = 'https://syddbzqkhotpyyoqykof.supabase.co';
+var SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_STtS281jKjrPZ_zfOiWvdA_pdB7kg1Q';
+
+async function loadSiteConfig() {
+  var enabledPixelIds = window.FALLBACK_PIXEL_IDS.slice();
+  var enabledTikTokPixelIds = [];
+  try {
+    var response = await fetch(
+      SUPABASE_URL + '/rest/v1/site_settings?id=eq.1&select=line_url,line_id,pixel_ids',
+      {
+        headers: {
+          'apikey': SUPABASE_PUBLISHABLE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_PUBLISHABLE_KEY
+        }
+      }
+    );
+    if (!response.ok) throw new Error('Settings request failed');
+    var rows = await response.json();
+    var settings = rows && rows[0];
+    if (settings) {
+      if (settings.line_url && settings.line_id) {
+        ENTERPRISE_LINE_URL = settings.line_url;
+        ENTERPRISE_LINE_ID = settings.line_id;
+        var lineButton = document.getElementById('line-add-btn');
+        var lineIdText = document.getElementById('line-official-id');
+        if (lineButton) lineButton.href = ENTERPRISE_LINE_URL;
+        if (lineIdText) lineIdText.textContent = ENTERPRISE_LINE_ID;
+      }
+      if (Array.isArray(settings.pixel_ids)) {
+        enabledPixelIds = settings.pixel_ids
+          .filter(function(pixel) { return pixel && pixel.enabled !== false && pixel.platform !== 'tiktok'; })
+          .map(function(pixel) { return String(pixel.id || ''); });
+        enabledTikTokPixelIds = settings.pixel_ids
+          .filter(function(pixel) { return pixel && pixel.enabled !== false && pixel.platform === 'tiktok'; })
+          .map(function(pixel) { return String(pixel.id || ''); });
+      }
+    }
+  } catch (error) {
+    console.warn('Site settings fallback used:', error);
+  }
+  window.initializeFbPixels(enabledPixelIds);
+  window.initializeTikTokPixels(enabledTikTokPixelIds);
+}
+loadSiteConfig();
+
+function detectTrafficSource() {
+  var params = new URLSearchParams(window.location.search);
+  var source = String(params.get('utm_source') || params.get('source') || '').toLowerCase();
+  if (params.get('fbclid') || /facebook|meta|(^|[^a-z])fb([^a-z]|$)/.test(source)) return 'FB';
+  if (params.get('ttclid') || /tiktok|tik_tok|(^|[^a-z])tk([^a-z]|$)/.test(source)) return 'TikTok';
+  return '';
+}
+
+function rememberTrafficSource(source) {
+  if (!source) return;
+  try {
+    localStorage.setItem('traffic_source_main', JSON.stringify({ source: source, saved_at: Date.now() }));
+  } catch (error) {}
+}
+
+function rememberedTrafficSource() {
+  try {
+    var saved = JSON.parse(localStorage.getItem('traffic_source_main') || 'null');
+    return saved && Date.now() - saved.saved_at < 86400000 ? saved.source : '';
+  } catch (error) {
+    return '';
+  }
+}
+
+var detectedTrafficSource = detectTrafficSource();
+rememberTrafficSource(detectedTrafficSource);
+var TRAFFIC_SOURCE = detectedTrafficSource || rememberedTrafficSource();
+
+// ============================================================
+// DYNAMIC DATE
+// ============================================================
+(function() {
+  var d = new Date();
+  var months = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+  document.getElementById('pub-date').textContent =
+    d.getFullYear() + ' 年 ' + months[d.getMonth()] + ' ' + d.getDate() + ' 日';
+})();
+
+// ============================================================
+// LIVE COUNTER
+// ============================================================
+var liveNum = 1247;
+function updateLiveCounter() {
+  liveNum += Math.floor(Math.random() * 3) + 1;
+  var f = liveNum.toLocaleString('zh-TW');
+  ['live-num','sidebar-count','ticker-count'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = f;
+  });
+}
+setInterval(updateLiveCounter, 4000);
+
+// QUOTA COUNTDOWN
+var quota = 37;
+function updateQuota() {
+  if (quota > 8) {
+    quota -= Math.floor(Math.random() * 2);
+    var el = document.getElementById('quota-count');
+    if (el) el.textContent = quota;
+  }
+}
+setInterval(updateQuota, 12000);
+
+// VIEW COUNT
+var views = 84291;
+setInterval(function() {
+  views += Math.floor(Math.random() * 5) + 1;
+  var el = document.getElementById('view-count');
+  if (el) el.textContent = views.toLocaleString('zh-TW');
+}, 3000);
+
+// ============================================================
+// QUIZ FORM LOGIC
+// ============================================================
+var answers = {};
+var currentStep = 1;
+var totalSteps = 3;
+var progressLabels = {
+  1: '第 1 步：選擇需求金額',
+  2: '第 2 步：確認基本條件',
+  3: '第 3 步：查看初步結果'
+};
+
+function updateProgress(step) {
+  var pct = Math.round((step / totalSteps) * 100);
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = progressLabels[step] || ('第 ' + step + ' 步，共 ' + totalSteps + ' 步');
+}
+updateProgress(1);
+
+function selectOption(btn, isDisqualify) {
+  var q = btn.getAttribute('data-q');
+  var v = btn.getAttribute('data-v');
+  var siblings = btn.closest('.options-grid').querySelectorAll('.option-btn');
+  siblings.forEach(function(b) { b.classList.remove('selected'); });
+  btn.classList.add('selected');
+  answers[q] = v;
+
+  if (isDisqualify) {
+    setTimeout(function() {
+      showModal('⚠️ 很抱歉', '目前銀行警示戶暫不符合申辦資格。建議先解除警示戶狀態後再行申辦。');
+      btn.classList.remove('selected');
+      delete answers[q];
+    }, 300);
+  }
+}
+
+function nextStep(from) {
+  var requiredQ = from === 1 ? ['q3'] : ['q1','q2','q4'];
+  for (var i = 0; i < requiredQ.length; i++) {
+    if (!answers[requiredQ[i]]) {
+      showModal('⚠️ 提示', '請先完成所有選項再繼續。');
+      return;
+    }
+  }
+
+  // FB Pixel: 進入第2步 = InitiateCheckout
+  if (from === 1 && typeof fbq !== 'undefined') {
+    fbq('track', 'InitiateCheckout');
+  }
+  // FB Pixel: 進入第3步 = AddToCart（代表高意願）
+  if (from === 2 && typeof fbq !== 'undefined') {
+    fbq('track', 'AddToCart');
+  }
+
+  document.getElementById('step-' + from).classList.remove('active');
+  var next = from + 1;
+  document.getElementById('step-' + next).classList.add('active');
+  currentStep = next;
+  updateProgress(next);
+  if (next === 3) updateEstimateCard();
+  document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function updateEstimateCard() {
+  var amount = answers['q3'] || '待確認';
+  var amountEl = document.getElementById('estimate-amount');
+  if (amountEl) amountEl.textContent = amount;
+}
+
+// ============================================================
+function createLeadId() {
+  if (window.crypto && window.crypto.randomUUID) {
+    return window.crypto.randomUUID();
+  }
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0;
+    var v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+async function submitLeadPayload(payload) {
+  var requestOptions = {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_PUBLISHABLE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_PUBLISHABLE_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify(payload)
+  };
+  var response = await fetch(SUPABASE_URL + '/rest/v1/leads', requestOptions);
+  if (!response.ok && payload.traffic_source) {
+    var errorText = await response.clone().text();
+    if (errorText.includes('traffic_source')) {
+      var fallbackPayload = { ...payload };
+      delete fallbackPayload.traffic_source;
+      requestOptions.body = JSON.stringify(fallbackPayload);
+      response = await fetch(SUPABASE_URL + '/rest/v1/leads', requestOptions);
+    }
+  }
+  return response;
+}
+
+// SUBMIT FORM -> Supabase + FB Pixel
+// ============================================================
+async function submitForm(e) {
+  e.preventDefault();
+
+  var name   = document.getElementById('f-name').value.trim();
+  var age    = document.getElementById('f-age').value.trim();
+  var city   = document.getElementById('f-city').value;
+  var idNum  = document.getElementById('f-id').value.trim();
+  var phone  = document.getElementById('f-phone').value.trim();
+  var lineId = document.getElementById('f-line').value.trim();
+
+  if (!name || !age || !city || !idNum || !phone || !lineId) {
+    showModal('⚠️ 提示', '請填寫所有必填欄位。');
+    return;
+  }
+  if (parseInt(age) > 60 || parseInt(age) < 18) {
+    showModal('⚠️ 提示', '申辦年齡限制為 18–60 歲。');
+    return;
+  }
+
+  var submitBtn = document.querySelector('#apply-form button[type="submit"]');
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.dataset.originalText = submitBtn.textContent;
+    submitBtn.textContent = '資料送出中，請稍候...';
+  }
+
+  var leadId = createLeadId();
+  var leadPayload = {
+    id: leadId,
+    name: name,
+    age: parseInt(age, 10),
+    city: city,
+    id_number: idNum,
+    phone: phone,
+    line_id: lineId,
+    q1_existing_loan: answers['q1'] || '',
+    q2_bank_status: answers['q2'] || '',
+    q3_amount_needed: answers['q3'] || '',
+    q4_foreign_currency_account: answers['q4'] || '',
+    source_url: window.location.href,
+    traffic_source: TRAFFIC_SOURCE || null,
+    user_agent: navigator.userAgent
+  };
+
+  try {
+    var response = await submitLeadPayload(leadPayload);
+
+    if (!response.ok) {
+      throw new Error('Supabase insert failed: ' + response.status);
+    }
+    window.__lastLeadId = leadId;
+  } catch(err) {
+    console.warn('Supabase submit error:', err);
+    showModal('⚠️ 提示', '資料送出失敗，請稍後再試，或直接加入 LINE 聯繫專員。');
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = submitBtn.dataset.originalText || '送出';
+    }
+    return;
+  }
+
+  // --- FB Pixel Events ---
+  if (typeof fbq !== 'undefined') {
+    fbq('track', 'Lead', {
+      content_name: '2026安心周轉專案',
+      content_category: '貸款引流',
+      value: 0,
+      currency: 'TWD'
+    });
+    fbq('track', 'CompleteRegistration', {
+      content_name: '2026安心周轉專案',
+      status: 'submitted'
+    });
+  }
+  if (typeof ttq !== 'undefined') {
+    ttq.track('SubmitApplication', {
+      content_type: 'loan_application'
+    });
+  }
+
+  // --- 更新 LINE 引導區塊 ---
+  document.getElementById('line-add-btn').href = ENTERPRISE_LINE_URL;
+  document.getElementById('line-official-id').textContent = ENTERPRISE_LINE_ID;
+
+  // --- 顯示成功畫面 ---
+  document.getElementById('step-3').style.display = 'none';
+  document.getElementById('progress-wrap').style.display = 'none';
+  document.getElementById('progress-label').style.display = 'none';
+  document.getElementById('success-screen').style.display = 'block';
+
+  // 更新名額與留言數
+  if (quota > 1) quota--;
+  var qel = document.getElementById('quota-count');
+  if (qel) qel.textContent = quota;
+  var cc = document.getElementById('comment-count');
+  var tc = document.getElementById('total-comments');
+  if (cc) cc.textContent = parseInt(cc.textContent) + 1;
+  if (tc) tc.textContent = parseInt(tc.textContent) + 1;
+
+  // 滾動到成功畫面
+  document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setTimeout(function() {
+    var lineBox = document.querySelector('.line-guide-box');
+    if (lineBox) lineBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 700);
+}
+
+// ============================================================
+// LINE CLICK TRACKING
+// ============================================================
+function trackLineClick() {
+  if (window.__lastLeadId) {
+    fetch(SUPABASE_URL + '/rest/v1/rpc/mark_line_clicked', {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_PUBLISHABLE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_PUBLISHABLE_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ lead_id: window.__lastLeadId })
+    }).catch(function(err) {
+      console.warn('Line click update error:', err);
+    });
+  }
+
+  if (typeof fbq !== 'undefined') {
+    fbq('trackCustom', 'LineAddFriend', {
+      content_name: '企業LINE加好友',
+      content_category: '貸款引流'
+    });
+  }
+}
+
+// ============================================================
+// FB Pixel: ViewContent (頁面滾動超過50%)
+// ============================================================
+var viewContentFired = false;
+window.addEventListener('scroll', function() {
+  if (viewContentFired) return;
+  var scrollPct = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+  if (scrollPct > 0.5) {
+    viewContentFired = true;
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'ViewContent', {
+        content_name: '2026安心周轉專案',
+        content_category: '貸款引流'
+      });
+    }
+  }
+});
+
+// ============================================================
+// LIKE BUTTON
+// ============================================================
+function toggleLike(btn, base) {
+  var numEl = btn.querySelector('.like-num');
+  if (btn.classList.contains('liked')) {
+    btn.classList.remove('liked');
+    numEl.textContent = base;
+  } else {
+    btn.classList.add('liked');
+    numEl.textContent = base + 1;
+  }
+}
+
+// ============================================================
+// MODAL
+// ============================================================
+function showModal(title, msg) {
+  document.getElementById('modal-title').textContent = title || '⚠️ 提示';
+  document.getElementById('modal-msg').textContent = msg || '';
+  document.getElementById('modal-overlay').classList.add('show');
+}
+
+// ============================================================
+// SCROLL TO FORM
+// ============================================================
+function scrollToForm() {
+  document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (typeof fbq !== 'undefined') {
+    fbq('trackCustom', 'ClickFloatCTA');
+  }
+}
+
+// ============================================================
+// TICKER LOOP
+// ============================================================
+var tickerInner = document.querySelector('.ticker-inner');
+if (tickerInner) { tickerInner.innerHTML += tickerInner.innerHTML; }
+</script>
+
+</body>
+</html>
