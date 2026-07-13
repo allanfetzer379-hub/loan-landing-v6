@@ -821,22 +821,55 @@
       document.getElementById('detail-drawer').classList.add('hidden');
     }
 
+    function binaryAnswer(value) {
+      const text = String(value || '').trim();
+      if (!text) return null;
+      if (/^(否|無|没有|沒有|不是|非|正常)/.test(text)) return false;
+      if (/^(是|有|異常|异常|屬於|属于)/.test(text)) return true;
+      return null;
+    }
+
+    function answerAfterColon(value) {
+      const match = String(value || '').match(/[：:]\s*([^；;,，\s]+)/);
+      return match ? match[1] : '';
+    }
+
     function bankWarningValue(value) {
-      return String(value || '').includes('警示') && !String(value || '').includes('非警示') ? '是' : '否';
+      const text = String(value || '').trim();
+      const explicit = text.match(/警示戶\s*[：:]\s*([^；;,，\s]+)/);
+      const parsed = binaryAnswer(explicit ? explicit[1] : text);
+      if (parsed !== null) return parsed ? '是' : '否';
+      if (/非警示|帳戶正常|正常/.test(text)) return '否';
+      return /異常|警示/.test(text) ? '是' : '否';
     }
 
     function foreignAccountValue(value) {
-      const text = String(value || '');
-      return text.includes('是') || text.includes('有外幣') ? '是' : '否';
+      const text = String(value || '').trim();
+      const explicit = text.match(/外幣帳戶\s*[：:]\s*([^；;,，\s]+)/);
+      const parsed = binaryAnswer(explicit ? explicit[1] : text);
+      if (parsed !== null) return parsed ? '是' : '否';
+      if (/無外幣|沒有外幣/.test(text)) return '否';
+      return /有外幣/.test(text) ? '是' : '否';
     }
 
     function existingLoanValue(value) {
+      const text = String(value || '').trim();
+      const loanSegment = text.split(/[；;]/)[0];
+      const parsed = binaryAnswer(answerAfterColon(loanSegment) || loanSegment);
+      if (parsed !== null) return parsed ? '有' : '無';
+      return !text || /無貸款|無任何貸款|沒有貸款/.test(text) ? '無' : '有';
+    }
+
+    function debtNegotiationValue(value) {
       const text = String(value || '');
-      return !text || text.includes('無') ? '無' : '有';
+      const match = text.match(/(?:銀行)?協商或呆帳\s*[：:]\s*([^；;,，\s]+)/);
+      if (!match) return '';
+      const parsed = binaryAnswer(match[1]);
+      return parsed === null ? match[1] : (parsed ? '是' : '否');
     }
 
     function clientCopyText(lead) {
-      return [
+      const rows = [
         `姓名：${lead.name || ''}`,
         `年齡：${lead.age || ''}`,
         `居住地：${lead.city || ''}`,
@@ -846,10 +879,15 @@
         `身分證字號：${lead.id_number || ''}`,
         `銀行警示戶：${bankWarningValue(lead.q2_bank_status)}`,
         `個人外幣帳戶：${foreignAccountValue(lead.q4_foreign_currency_account)}`,
-        `信貸/房貸/汽貸/機車：${existingLoanValue(lead.q1_existing_loan)}`,
+        `信貸/房貸/汽貸/機車：${existingLoanValue(lead.q1_existing_loan)}`
+      ];
+      const debtNegotiation = debtNegotiationValue(lead.q1_existing_loan);
+      if (debtNegotiation) rows.push(`銀行協商或呆帳：${debtNegotiation}`);
+      rows.push(
         `客戶類型：${leadCustomerType(lead)}`,
         `底粉來源：${lead.base_duplicate ? (lead.base_duplicate_source || '') : ''}`
-      ].join('\n');
+      );
+      return rows.join('\n');
     }
 
     async function copyLead(id) {
