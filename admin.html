@@ -195,14 +195,14 @@
             <button type="button" data-days="30" onclick="setQuickDate(30,this)">近30日</button>
           </div>
           <div class="date-field">
-            <input id="date-from" type="date" aria-label="開始日期" onchange="clearQuickDate();renderLeads()" />
+            <input id="date-from" type="date" aria-label="開始日期" onchange="clearQuickDate();applyLeadFilters()" />
           </div>
           <span class="notice">—</span>
           <div class="date-field">
-            <input id="date-to" type="date" aria-label="結束日期" onchange="clearQuickDate();renderLeads()" />
+            <input id="date-to" type="date" aria-label="結束日期" onchange="clearQuickDate();applyLeadFilters()" />
           </div>
           <div class="status-field">
-            <select id="status-filter" onchange="renderLeads()">
+            <select id="status-filter" onchange="applyLeadFilters()">
               <option value="">全部</option>
               <option value="new">新客戶</option>
               <option value="contacted">已聯繫</option>
@@ -213,25 +213,25 @@
             </select>
           </div>
           <div class="status-field">
-            <select id="base-duplicate-filter" onchange="renderLeads()">
+            <select id="base-duplicate-filter" onchange="applyLeadFilters()">
               <option value="">底粉：全部</option>
               <option value="yes">底粉重複</option>
               <option value="no">非底粉重複</option>
             </select>
           </div>
           <div class="status-field">
-            <select id="traffic-source-filter" onchange="renderLeads()">
+            <select id="traffic-source-filter" onchange="applyLeadFilters()">
               <option value="">來源：全部</option>
               <option value="FB">FB</option>
               <option value="TikTok">TikTok</option>
               <option value="unknown">未識別</option>
             </select>
           </div>
-          <button id="refresh-btn" onclick="loadLeads()">刷新訂單</button>
+          <button id="refresh-btn" onclick="refreshLeadList()">刷新訂單</button>
           <div class="filter-spacer"></div>
           <div class="search-wrap">
-            <input id="search" placeholder="搜尋姓名 / 手機 / LINE / 身分證" oninput="renderLeads()" />
-            <button type="button" onclick="renderLeads()">搜尋</button>
+            <input id="search" placeholder="搜尋姓名 / 手機 / LINE / 身分證" oninput="scheduleLeadSearch()" />
+            <button type="button" onclick="applyLeadFilters()">搜尋</button>
           </div>
         </div>
         <p id="export-note" class="notice export-note">未勾選時，會匯出目前篩選結果。</p>
@@ -313,6 +313,6 @@
     <div id="detail-body" class="drawer-body"></div>
   </aside>
 
-  <script src="admin.bundle.js?v=20260718-1"></script>
+  <script src="admin.bundle.js?v=20260722-pagination100"></script>
 </body>
 </html>
