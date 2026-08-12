@@ -314,5 +314,61 @@
   </aside>
 
   <script src="admin.bundle.js?v=20260722-status-time"></script>
+  <script>
+    (function () {
+      var legacyClientCopyText = typeof clientCopyText === 'function' ? clientCopyText : null;
+
+      function isNineFieldLead(lead) {
+        return String(lead && lead.q4_foreign_currency_account || '') === 'FORM_V2_NINE_FIELDS';
+      }
+
+      function debtValue(value) {
+        var match = String(value || '').match(/(?:銀行)?協商或呆帳\s*[：:]\s*([^；;,，\s]+)/);
+        return match ? match[1] : '';
+      }
+
+      function warningValue(value) {
+        var text = String(value || '');
+        if (/警示戶\s*[：:]\s*否/.test(text) || /帳戶正常|非警示/.test(text)) return '否';
+        return /警示戶/.test(text) ? '是' : '否';
+      }
+
+      clientCopyText = function (lead) {
+        if (!isNineFieldLead(lead)) return legacyClientCopyText ? legacyClientCopyText(lead) : '';
+        return [
+          '姓名：' + (lead.name || ''),
+          '年齡：' + (lead.age || ''),
+          '居住地：' + (lead.city || ''),
+          'LINE ID：' + (lead.line_id || ''),
+          '手機號碼：' + (lead.phone || ''),
+          '需求金額：' + (lead.q3_amount_needed || ''),
+          '身分證字號：' + (lead.id_number || ''),
+          '銀行警示戶：' + warningValue(lead.q2_bank_status),
+          '銀行協商或呆帳：' + debtValue(lead.q1_existing_loan)
+        ].join('\n');
+      };
+
+      var legacyOpenDetails = typeof openDetails === 'function' ? openDetails : null;
+      if (legacyOpenDetails) {
+        openDetails = function (id) {
+          legacyOpenDetails(id);
+          var detailBody = document.getElementById('detail-body');
+          if (!detailBody || detailBody.textContent.indexOf('FORM_V2_NINE_FIELDS') === -1) return;
+          var rows = detailBody.querySelectorAll('.detail-grid > *');
+          rows.forEach(function (row) {
+            var label = row.querySelector('span');
+            var value = row.querySelector('strong');
+            if (!label || !value) return;
+            if (value.textContent.trim() === 'FORM_V2_NINE_FIELDS') {
+              row.style.display = 'none';
+            } else if (label.textContent.trim() === '既有貸款') {
+              label.textContent = '銀行協商或呆帳';
+              value.textContent = debtValue(value.textContent);
+            }
+          });
+        };
+      }
+    }());
+  </script>
 </body>
 </html>
