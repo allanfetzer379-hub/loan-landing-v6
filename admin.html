@@ -71,6 +71,7 @@
     .tag-approved { background:#eee8ff; color:#6741c7; }
     .tag-rejected { background:#fff2d7; color:#9b6100; }
     .tag-invalid { background:#fde9e9; color:#b42e2e; }
+    .tag-invalid-reason { background:#fff2d7; color:#8a5700; border:1px solid #efca78; }
     .tag-line { background:#f3e4ff; color:#9637b4; }
     .tag-fresh { background:#dcf8eb; color:#087b42; }
     .tag-duplicate { background:#f9e1ff; color:#a02cb4; border:1px solid #ecaaf5; }
@@ -84,6 +85,7 @@
     .lead-actions { display:flex; align-items:center; justify-content:flex-end; gap:6px; flex-wrap:wrap; max-width:450px; }
     .status-btn { background:#fff; color:#65738a; border-color:#dce2ea; padding:6px 9px; font-weight:500; }
     .status-btn.active { background:#eaf3fc; color:#1368b7; border-color:#bcd6ed; font-weight:800; }
+    .invalid-reason-select { width:auto; min-width:92px; padding:6px 28px 6px 9px; border:1px solid #dce2ea; border-radius:5px; background:#fff; color:#526178; font-size:12px; }
     .empty { padding: 36px; text-align: center; }
     .drawer-backdrop { position:fixed; inset:0; background:rgba(13,24,42,.34); z-index:1990; }
     .detail-drawer { position:fixed; top:0; right:0; bottom:0; width:min(520px,100%); background:#fff; z-index:2000; box-shadow:-8px 0 26px rgba(16,29,49,.18); display:flex; flex-direction:column; }
@@ -313,7 +315,7 @@
     <div id="detail-body" class="drawer-body"></div>
   </aside>
 
-  <script src="admin.bundle.js?v=20260722-status-time"></script>
+  <script src="admin.bundle.js?v=20260813-invalid-reason"></script>
   <script>
     (function () {
       var legacyClientCopyText = typeof clientCopyText === 'function' ? clientCopyText : null;
